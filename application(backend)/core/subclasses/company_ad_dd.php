@@ -195,11 +195,7 @@ class company_ad_dd
                                  'link_child'=>'billboard_loc',
                                  'link_subtext'=>array('address'),
                                  'where_clause'=>''),
-                           array('type'=>'1-M',
-                                 'table'=>'question',
-                                 'link_parent'=>'company_ad_id',
-                                 'link_child'=>'company_ad',
-                                 'where_clause'=>''),
+                     
                            array('type'=>'M-1',
                              'table'=>'company',
                              'alias'=>'',

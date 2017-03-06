@@ -178,12 +178,7 @@ class question_dd
 
     static function load_relationships()
     {
-        $relations = array(array('type'=>'1-M',
-                                 'table'=>'player_answered_question',
-                                 'link_parent'=>'question_id',
-                                 'link_child'=>'question',
-                                 'where_clause'=>''),
-                           array('type'=>'1-1',
+        $relations = array(array('type'=>'1-1',
                                  'table'=>'company_ad',
                                  'alias'=>'company_ad',
                                  'link_parent'=>'company_ad_id',
