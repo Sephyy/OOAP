@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 02, 2017 at 07:27 AM
--- Server version: 5.6.24
--- PHP Version: 5.6.8
+-- Generation Time: Mar 06, 2017 at 09:47 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 7.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `billboard`
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `advertiser`
 --
 
-CREATE TABLE IF NOT EXISTS `advertiser` (
+CREATE TABLE `advertiser` (
   `advertiser_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
@@ -40,21 +40,23 @@ CREATE TABLE IF NOT EXISTS `advertiser` (
 -- Table structure for table `billboard_location`
 --
 
-CREATE TABLE IF NOT EXISTS `billboard_location` (
+CREATE TABLE `billboard_location` (
   `billboard_location_id` int(11) NOT NULL,
   `address` varchar(10000) NOT NULL,
-  `postal_code` int(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `postal_code` int(4) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `billboard_location`
 --
 
-INSERT INTO `billboard_location` (`billboard_location_id`, `address`, `postal_code`) VALUES
-(1, '623 Valencia St. Sampaloc Village Makati City', 1700),
-(2, 'Lot 10 Blk 5 Alliage Drive, Pasig City', 1892),
-(3, '687 Rainbow St. Westborough Village Paranaque City', 3456),
-(4, 'Blk 6 Lot 5 treelane Pasay City', 8754);
+INSERT INTO `billboard_location` (`billboard_location_id`, `address`, `postal_code`, `latitude`, `longitude`) VALUES
+(1, '623 Valencia St. Sampaloc Village Makati City', 1700, 0, 0),
+(2, 'Lot 10 Blk 5 Alliage Drive, Pasig City', 1892, 0, 0),
+(3, '687 Rainbow St. Westborough Village Paranaque City', 3456, 0, 0),
+(4, 'Blk 6 Lot 5 treelane Pasay City', 8754, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -62,7 +64,7 @@ INSERT INTO `billboard_location` (`billboard_location_id`, `address`, `postal_co
 -- Table structure for table `cobalt_reporter`
 --
 
-CREATE TABLE IF NOT EXISTS `cobalt_reporter` (
+CREATE TABLE `cobalt_reporter` (
   `module_name` varchar(255) NOT NULL,
   `report_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -82,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `cobalt_reporter` (
 -- Table structure for table `cobalt_sst`
 --
 
-CREATE TABLE IF NOT EXISTS `cobalt_sst` (
+CREATE TABLE `cobalt_sst` (
   `auto_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -95,14 +97,14 @@ CREATE TABLE IF NOT EXISTS `cobalt_sst` (
 -- Table structure for table `company`
 --
 
-CREATE TABLE IF NOT EXISTS `company` (
+CREATE TABLE `company` (
   `company_id` int(11) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `company_address` varchar(10000) NOT NULL,
   `company_mobile_num1` char(11) NOT NULL,
   `company_mobile_num2` char(11) DEFAULT NULL,
   `company_tel_num` char(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company`
@@ -120,14 +122,14 @@ INSERT INTO `company` (`company_id`, `company_name`, `company_address`, `company
 -- Table structure for table `company_ad`
 --
 
-CREATE TABLE IF NOT EXISTS `company_ad` (
+CREATE TABLE `company_ad` (
   `company_ad_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `billboard_loc` int(11) NOT NULL,
   `ad_start_date` date NOT NULL,
   `ad_end_date` date NOT NULL,
   `advertisement_name` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company_ad`
@@ -142,13 +144,13 @@ INSERT INTO `company_ad` (`company_ad_id`, `company_id`, `billboard_loc`, `ad_st
 -- Table structure for table `person`
 --
 
-CREATE TABLE IF NOT EXISTS `person` (
+CREATE TABLE `person` (
   `person_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `middle_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `person`
@@ -164,7 +166,7 @@ INSERT INTO `person` (`person_id`, `first_name`, `middle_name`, `last_name`, `ge
 -- Table structure for table `player`
 --
 
-CREATE TABLE IF NOT EXISTS `player` (
+CREATE TABLE `player` (
   `player_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -177,10 +179,11 @@ CREATE TABLE IF NOT EXISTS `player` (
 -- Table structure for table `player_answered_question`
 --
 
-CREATE TABLE IF NOT EXISTS `player_answered_question` (
+CREATE TABLE `player_answered_question` (
   `player_answered_question_id` int(11) NOT NULL,
   `question` int(11) NOT NULL,
-  `player_id` int(11) NOT NULL
+  `player_id` int(11) NOT NULL,
+  `points_attained` varchar(10000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -189,14 +192,14 @@ CREATE TABLE IF NOT EXISTS `player_answered_question` (
 -- Table structure for table `question`
 --
 
-CREATE TABLE IF NOT EXISTS `question` (
+CREATE TABLE `question` (
   `question_id` int(11) NOT NULL,
   `question` varchar(10000) NOT NULL,
   `answer` varchar(255) NOT NULL,
   `points` int(11) NOT NULL,
   `time_limit` int(11) NOT NULL,
   `company_ad` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
@@ -208,17 +211,43 @@ INSERT INTO `question` (`question_id`, `question`, `answer`, `points`, `time_lim
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `question_answer`
+--
+
+CREATE TABLE `question_answer` (
+  `question_answer_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `answer` varchar(10000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `question_choices`
+--
+
+CREATE TABLE `question_choices` (
+  `question_choices_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `choice_number` int(11) NOT NULL,
+  `choice` varchar(255) NOT NULL,
+  `is_correct` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `system_log`
 --
 
-CREATE TABLE IF NOT EXISTS `system_log` (
+CREATE TABLE `system_log` (
   `entry_id` bigint(20) NOT NULL,
   `ip_address` varchar(255) NOT NULL,
   `user` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   `action` mediumtext NOT NULL,
   `module` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `system_log`
@@ -517,7 +546,8 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 (289, '::1', 'root', '2017-02-23 15:38:41', 'Query Executed: UPDATE trivia SET trivia = ?, company = ? WHERE trivia_id = ?\r\nArray\n(\n    [0] => sii\n    [1] => Bench started 1987 with small store selling men''s t-shirts.\n    [2] => 2\n    [3] => 1\n)\n', '/ooap/modules/trivia/trivia/edit_trivia.php'),
 (290, '::1', 'root', '2017-02-25 14:33:56', 'Logged in', '/ooap/login.php'),
 (291, '::1', 'root', '2017-02-25 14:34:22', 'Logged out', '/ooap/end.php'),
-(292, '::1', 'root', '2017-02-26 00:27:35', 'Logged in', '/ooap/login.php');
+(292, '::1', 'root', '2017-02-26 00:27:35', 'Logged in', '/ooap/login.php'),
+(293, '::1', 'root', '2017-03-06 16:31:16', 'Logged in', '/ooap/login.php');
 
 -- --------------------------------------------------------
 
@@ -525,7 +555,7 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 -- Table structure for table `system_settings`
 --
 
-CREATE TABLE IF NOT EXISTS `system_settings` (
+CREATE TABLE `system_settings` (
   `setting` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -546,7 +576,7 @@ INSERT INTO `system_settings` (`setting`, `value`) VALUES
 -- Table structure for table `system_skins`
 --
 
-CREATE TABLE IF NOT EXISTS `system_skins` (
+CREATE TABLE `system_skins` (
   `skin_id` int(11) NOT NULL,
   `skin_name` varchar(255) NOT NULL,
   `header` varchar(255) NOT NULL,
@@ -556,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `system_skins` (
   `fonts_css` varchar(255) NOT NULL,
   `override_css` varchar(255) NOT NULL,
   `icon_set` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `system_skins`
@@ -582,11 +612,11 @@ INSERT INTO `system_skins` (`skin_id`, `skin_name`, `header`, `footer`, `master_
 -- Table structure for table `trivia`
 --
 
-CREATE TABLE IF NOT EXISTS `trivia` (
+CREATE TABLE `trivia` (
   `trivia_id` int(11) NOT NULL,
   `trivia` varchar(10000) NOT NULL,
   `company` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trivia`
@@ -601,7 +631,7 @@ INSERT INTO `trivia` (`trivia_id`, `trivia`, `company`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
@@ -625,7 +655,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `iteration`, `method`, `pers
 -- Table structure for table `user_links`
 --
 
-CREATE TABLE IF NOT EXISTS `user_links` (
+CREATE TABLE `user_links` (
   `link_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
@@ -636,7 +666,7 @@ CREATE TABLE IF NOT EXISTS `user_links` (
   `status` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `priority` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_links`
@@ -718,7 +748,7 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 -- Table structure for table `user_passport`
 --
 
-CREATE TABLE IF NOT EXISTS `user_passport` (
+CREATE TABLE `user_passport` (
   `username` varchar(255) NOT NULL,
   `link_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -819,12 +849,12 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 -- Table structure for table `user_passport_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `user_passport_groups` (
+CREATE TABLE `user_passport_groups` (
   `passport_group_id` int(11) NOT NULL,
   `passport_group` varchar(255) NOT NULL,
   `priority` int(11) NOT NULL,
   `icon` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_passport_groups`
@@ -842,11 +872,11 @@ INSERT INTO `user_passport_groups` (`passport_group_id`, `passport_group`, `prio
 -- Table structure for table `user_role`
 --
 
-CREATE TABLE IF NOT EXISTS `user_role` (
+CREATE TABLE `user_role` (
   `role_id` int(11) NOT NULL,
   `role` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_role`
@@ -863,7 +893,7 @@ INSERT INTO `user_role` (`role_id`, `role`, `description`) VALUES
 -- Table structure for table `user_role_links`
 --
 
-CREATE TABLE IF NOT EXISTS `user_role_links` (
+CREATE TABLE `user_role_links` (
   `role_id` int(11) NOT NULL,
   `link_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1002,7 +1032,9 @@ INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES
 -- Indexes for table `advertiser`
 --
 ALTER TABLE `advertiser`
-  ADD PRIMARY KEY (`advertiser_id`), ADD KEY `company_id` (`company_id`), ADD KEY `person_id` (`person_id`);
+  ADD PRIMARY KEY (`advertiser_id`),
+  ADD KEY `company_id` (`company_id`),
+  ADD KEY `person_id` (`person_id`);
 
 --
 -- Indexes for table `billboard_location`
@@ -1032,7 +1064,9 @@ ALTER TABLE `company`
 -- Indexes for table `company_ad`
 --
 ALTER TABLE `company_ad`
-  ADD PRIMARY KEY (`company_ad_id`), ADD KEY `company_id` (`company_id`), ADD KEY `billboard_loc` (`billboard_loc`);
+  ADD PRIMARY KEY (`company_ad_id`),
+  ADD KEY `company_id` (`company_id`),
+  ADD KEY `billboard_loc` (`billboard_loc`);
 
 --
 -- Indexes for table `person`
@@ -1044,19 +1078,38 @@ ALTER TABLE `person`
 -- Indexes for table `player`
 --
 ALTER TABLE `player`
-  ADD PRIMARY KEY (`player_id`), ADD KEY `person_id` (`person_id`), ADD KEY `person_id_2` (`person_id`);
+  ADD PRIMARY KEY (`player_id`),
+  ADD KEY `person_id` (`person_id`),
+  ADD KEY `person_id_2` (`person_id`);
 
 --
 -- Indexes for table `player_answered_question`
 --
 ALTER TABLE `player_answered_question`
-  ADD PRIMARY KEY (`player_answered_question_id`), ADD KEY `question` (`question`), ADD KEY `player_id` (`player_id`);
+  ADD PRIMARY KEY (`player_answered_question_id`),
+  ADD KEY `question` (`question`),
+  ADD KEY `player_id` (`player_id`);
 
 --
 -- Indexes for table `question`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`question_id`);
+
+--
+-- Indexes for table `question_answer`
+--
+ALTER TABLE `question_answer`
+  ADD PRIMARY KEY (`question_answer_id`),
+  ADD KEY `question_id` (`question_id`),
+  ADD KEY `answer` (`answer`(767));
+
+--
+-- Indexes for table `question_choices`
+--
+ALTER TABLE `question_choices`
+  ADD PRIMARY KEY (`question_choices_id`),
+  ADD KEY `question_idx` (`question_id`);
 
 --
 -- Indexes for table `system_log`
@@ -1080,7 +1133,8 @@ ALTER TABLE `system_skins`
 -- Indexes for table `trivia`
 --
 ALTER TABLE `trivia`
-  ADD PRIMARY KEY (`trivia_id`), ADD KEY `company` (`company`);
+  ADD PRIMARY KEY (`trivia_id`),
+  ADD KEY `company` (`company`);
 
 --
 -- Indexes for table `user`
@@ -1092,7 +1146,8 @@ ALTER TABLE `user`
 -- Indexes for table `user_links`
 --
 ALTER TABLE `user_links`
-  ADD PRIMARY KEY (`link_id`), ADD KEY `name` (`name`);
+  ADD PRIMARY KEY (`link_id`),
+  ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `user_passport`
@@ -1131,7 +1186,7 @@ ALTER TABLE `advertiser`
 -- AUTO_INCREMENT for table `billboard_location`
 --
 ALTER TABLE `billboard_location`
-  MODIFY `billboard_location_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `billboard_location_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `cobalt_sst`
 --
@@ -1141,17 +1196,17 @@ ALTER TABLE `cobalt_sst`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `company_ad`
 --
 ALTER TABLE `company_ad`
-  MODIFY `company_ad_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `company_ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `player`
 --
@@ -1166,37 +1221,47 @@ ALTER TABLE `player_answered_question`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `question_answer`
+--
+ALTER TABLE `question_answer`
+  MODIFY `question_answer_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `question_choices`
+--
+ALTER TABLE `question_choices`
+  MODIFY `question_choices_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `system_log`
 --
 ALTER TABLE `system_log`
-  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=293;
+  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
 --
 -- AUTO_INCREMENT for table `system_skins`
 --
 ALTER TABLE `system_skins`
-  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `trivia`
 --
 ALTER TABLE `trivia`
-  MODIFY `trivia_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `trivia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user_links`
 --
 ALTER TABLE `user_links`
-  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=69;
+  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 --
 -- AUTO_INCREMENT for table `user_passport_groups`
 --
 ALTER TABLE `user_passport_groups`
-  MODIFY `passport_group_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `passport_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -1205,33 +1270,45 @@ ALTER TABLE `user_role`
 -- Constraints for table `advertiser`
 --
 ALTER TABLE `advertiser`
-ADD CONSTRAINT `advertiser_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`);
+  ADD CONSTRAINT `advertiser_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`);
 
 --
 -- Constraints for table `company_ad`
 --
 ALTER TABLE `company_ad`
-ADD CONSTRAINT `company_ad_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
-ADD CONSTRAINT `company_ad_ibfk_2` FOREIGN KEY (`billboard_loc`) REFERENCES `billboard_location` (`billboard_location_id`);
+  ADD CONSTRAINT `company_ad_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
+  ADD CONSTRAINT `company_ad_ibfk_2` FOREIGN KEY (`billboard_loc`) REFERENCES `billboard_location` (`billboard_location_id`);
 
 --
 -- Constraints for table `player`
 --
 ALTER TABLE `player`
-ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`);
+  ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`);
 
 --
 -- Constraints for table `player_answered_question`
 --
 ALTER TABLE `player_answered_question`
-ADD CONSTRAINT `player_answered_question_ibfk_1` FOREIGN KEY (`question`) REFERENCES `question` (`question_id`),
-ADD CONSTRAINT `player_answered_question_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`);
+  ADD CONSTRAINT `player_answered_question_ibfk_1` FOREIGN KEY (`question`) REFERENCES `question` (`question_id`),
+  ADD CONSTRAINT `player_answered_question_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`);
+
+--
+-- Constraints for table `question_answer`
+--
+ALTER TABLE `question_answer`
+  ADD CONSTRAINT `question_answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`);
+
+--
+-- Constraints for table `question_choices`
+--
+ALTER TABLE `question_choices`
+  ADD CONSTRAINT `question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `trivia`
 --
 ALTER TABLE `trivia`
-ADD CONSTRAINT `trivia_ibfk_1` FOREIGN KEY (`company`) REFERENCES `company` (`company_id`);
+  ADD CONSTRAINT `trivia_ibfk_1` FOREIGN KEY (`company`) REFERENCES `company` (`company_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
