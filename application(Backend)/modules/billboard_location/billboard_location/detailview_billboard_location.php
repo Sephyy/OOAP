@@ -28,6 +28,6 @@ $html = new billboard_location_html;
 $html->draw_header('Detail View: %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->detail_view = TRUE;
-$html->draw_controls('view');
+$html->draw_controls('view','edit','delete');
 
 $html->draw_footer();

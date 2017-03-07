@@ -46,7 +46,9 @@ if(xsrf_guard())
         if($message=="")
         {
             $dbh_billboard_location->add($arr_form_data);
-            
+            $billboard_location_id = $dbh_billboard_location->auto_id;
+           
+
 
             redirect("listview_billboard_location.php?$query_string");
         }
@@ -56,6 +58,31 @@ require 'subclasses/billboard_location_html.php';
 $html = new billboard_location_html;
 $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
-$html->draw_controls('add');
 
+//$html->draw_controls('add');
+
+//***********************************************
+$html->draw_container_div_start();
+$html->draw_fieldset_header('Customized Form w/ GMaps');
+$html->draw_fieldset_body_start();
+echo '<table class="input_form">';
+
+
+$html->draw_field('address');
+$html->draw_field('postal_code');
+$html->draw_field('latitude');
+$html->draw_field('longitude');
+require 'thirdparty/googleMaps/samp.php';
+echo '<tr><td colspan="2">';
+
+echo '</td></tr>';
+
+
+echo '</table>';
+$html->autofocus('position_title');
+$html->draw_fieldset_body_end();
+$html->draw_fieldset_footer_start();
+$html->draw_submit_cancel(FALSE);
+
+//***************************************************
 $html->draw_footer();
