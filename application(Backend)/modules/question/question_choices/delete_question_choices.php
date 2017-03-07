@@ -4,12 +4,12 @@
 //Cobalt developed by JV Roig (jvroig@jvroig.com)
 //****************************************************************************************
 require 'path.php';
-init_cobalt('Delete billboard location');
+init_cobalt('Delete question choices');
 
-if(isset($_GET['billboard_location_id']))
+if(isset($_GET['question_choices_id']))
 {
-    $billboard_location_id = urldecode($_GET['billboard_location_id']);
-    require_once 'form_data_billboard_location.php';
+    $question_choices_id = urldecode($_GET['question_choices_id']);
+    require_once 'form_data_question_choices.php';
 }
 
 if(xsrf_guard())
@@ -21,30 +21,30 @@ if(xsrf_guard())
     if($_POST['btn_cancel'])
     {
         log_action('Pressed cancel button');
-        redirect("listview_billboard_location.php?$query_string");
+        redirect("listview_question_choices.php?$query_string");
     }
 
     elseif($_POST['btn_delete'])
     {
         log_action('Pressed delete button');
-        require_once 'subclasses/billboard_location.php';
-        $dbh_billboard_location = new billboard_location;
+        require_once 'subclasses/question_choices.php';
+        $dbh_question_choices = new question_choices;
 
-        $object_name = 'dbh_billboard_location';
+        $object_name = 'dbh_question_choices';
         require 'components/create_form_data.php';
 
 
-        $dbh_billboard_location->delete($arr_form_data);
+        $dbh_question_choices->delete($arr_form_data);
 
-        redirect("listview_billboard_location.php?$query_string");
+        redirect("listview_question_choices.php?$query_string");
     }
 }
-require 'subclasses/billboard_location_html.php';
-$html = new billboard_location_html;
+require 'subclasses/question_choices_html.php';
+$html = new question_choices_html;
 $html->draw_header('Delete %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 
-$html->draw_hidden('billboard_location_id');
+$html->draw_hidden('question_choices_id');
 
 $html->detail_view = TRUE;
 $html->draw_controls('delete');

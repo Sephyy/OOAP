@@ -4,7 +4,7 @@
 //Cobalt developed by JV Roig (jvroig@jvroig.com)
 //****************************************************************************************
 require 'path.php';
-init_cobalt('Add billboard location');
+init_cobalt('Add question choices');
 
 require 'components/get_listview_referrer.php';
 
@@ -13,17 +13,17 @@ if(xsrf_guard())
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
     require 'components/query_string_standard.php';
-    require 'subclasses/billboard_location.php';
-    $dbh_billboard_location = new billboard_location;
+    require 'subclasses/question_choices.php';
+    $dbh_question_choices = new question_choices;
 
-    $object_name = 'dbh_billboard_location';
+    $object_name = 'dbh_question_choices';
     require 'components/create_form_data.php';
     extract($arr_form_data);
 
     if($_POST['btn_cancel'])
     {
         log_action('Pressed cancel button');
-        redirect("listview_billboard_location.php?$query_string");
+        redirect("listview_question_choices.php?$query_string");
     }
 
 
@@ -31,10 +31,10 @@ if(xsrf_guard())
     {
         log_action('Pressed submit button');
 
-        $message .= $dbh_billboard_location->sanitize($arr_form_data)->lst_error;
+        $message .= $dbh_question_choices->sanitize($arr_form_data)->lst_error;
         extract($arr_form_data);
 
-        if($dbh_billboard_location->check_uniqueness($arr_form_data)->is_unique)
+        if($dbh_question_choices->check_uniqueness($arr_form_data)->is_unique)
         {
             //Good, no duplicate in database
         }
@@ -45,15 +45,15 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $dbh_billboard_location->add($arr_form_data);
+            $dbh_question_choices->add($arr_form_data);
             
 
-            redirect("listview_billboard_location.php?$query_string");
+            redirect("listview_question_choices.php?$query_string");
         }
     }
 }
-require 'subclasses/billboard_location_html.php';
-$html = new billboard_location_html;
+require 'subclasses/question_choices_html.php';
+$html = new question_choices_html;
 $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_controls('add');

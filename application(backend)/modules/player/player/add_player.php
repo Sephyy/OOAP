@@ -47,17 +47,6 @@ if(xsrf_guard())
         {
             $dbh_player->add($arr_form_data);
             $player_id = $dbh_player->auto_id;
-            require_once 'subclasses/player_answered_question.php';
-            $dbh_player = new player_answered_question;
-            for($a=0; $a<$player_answered_question_count;$a++)
-            {
-                
-                $param = array(
-                               'question'=>$cf_player_answered_question_question[$a],
-                               'player_id'=>$player_id
-                              );
-                $dbh_player->add($param);
-            }
 
 
             redirect("listview_player.php?$query_string");

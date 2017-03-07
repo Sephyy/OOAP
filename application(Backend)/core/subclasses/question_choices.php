@@ -1,17 +1,17 @@
 <?php
-require_once 'billboard_location_dd.php';
-class billboard_location extends data_abstraction
+require_once 'question_choices_dd.php';
+class question_choices extends data_abstraction
 {
     var $fields = array();
 
 
     function __construct()
     {
-        $this->fields     = billboard_location_dd::load_dictionary();
-        $this->relations  = billboard_location_dd::load_relationships();
-        $this->subclasses = billboard_location_dd::load_subclass_info();
-        $this->table_name = billboard_location_dd::$table_name;
-        $this->tables     = billboard_location_dd::$table_name;
+        $this->fields     = question_choices_dd::load_dictionary();
+        $this->relations  = question_choices_dd::load_relationships();
+        $this->subclasses = question_choices_dd::load_subclass_info();
+        $this->table_name = question_choices_dd::$table_name;
+        $this->tables     = question_choices_dd::$table_name;
     }
 
     function add($param)
@@ -21,15 +21,15 @@ class billboard_location extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('billboard_location_id, address, postal_code, latitude, longitude');
+            $this->set_fields('question_choices_id, question_id, choice_number, choice, is_correct');
             $this->set_values("?,?,?,?,?");
 
-            $bind_params = array('isidd',
-                                 &$this->fields['billboard_location_id']['value'],
-                                 &$this->fields['address']['value'],
-                                 &$this->fields['postal_code']['value'],
-                                 &$this->fields['latitude']['value'],
-                                 &$this->fields['longitude']['value']);
+            $bind_params = array('iiiss',
+                                 &$this->fields['question_choices_id']['value'],
+                                 &$this->fields['question_id']['value'],
+                                 &$this->fields['choice_number']['value'],
+                                 &$this->fields['choice']['value'],
+                                 &$this->fields['is_correct']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -45,15 +45,15 @@ class billboard_location extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("address = ?, postal_code = ?, latitude = ?, longitude = ?");
-            $this->set_where("billboard_location_id = ?");
+            $this->set_update("question_id = ?, choice_number = ?, choice = ?, is_correct = ?");
+            $this->set_where("question_choices_id = ?");
 
-            $bind_params = array('siddi',
-                                 &$this->fields['address']['value'],
-                                 &$this->fields['postal_code']['value'],
-                                 &$this->fields['latitude']['value'],
-                                 &$this->fields['longitude']['value'],
-                                 &$this->fields['billboard_location_id']['value']);
+            $bind_params = array('iissi',
+                                 &$this->fields['question_id']['value'],
+                                 &$this->fields['choice_number']['value'],
+                                 &$this->fields['choice']['value'],
+                                 &$this->fields['is_correct']['value'],
+                                 &$this->fields['question_choices_id']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -66,10 +66,10 @@ class billboard_location extends data_abstraction
     {
         $this->set_parameters($param);
         $this->set_query_type('DELETE');
-        $this->set_where("billboard_location_id = ?");
+        $this->set_where("question_choices_id = ?");
 
         $bind_params = array('i',
-                             &$this->fields['billboard_location_id']['value']);
+                             &$this->fields['question_choices_id']['value']);
 
         $this->stmt_prepare($bind_params);
         $this->stmt_execute();
@@ -82,10 +82,10 @@ class billboard_location extends data_abstraction
     {
         $this->set_parameters($param);
         $this->set_query_type('DELETE');
-        $this->set_where("");
+        $this->set_where("question_id = ?");
 
-        $bind_params = array('',
-                             );
+        $bind_params = array('i',
+                             &$this->fields['question_id']['value']);
 
         $this->stmt_prepare($bind_params);
         $this->stmt_execute();
@@ -105,10 +105,10 @@ class billboard_location extends data_abstraction
     {
         $this->set_parameters($param);
         $this->set_query_type('SELECT');
-        $this->set_where("billboard_location_id = ?");
+        $this->set_where("question_choices_id = ?");
 
         $bind_params = array('i',
-                             &$this->fields['billboard_location_id']['value']);
+                             &$this->fields['question_choices_id']['value']);
 
         $this->stmt_prepare($bind_params);
         $this->stmt_execute();
@@ -126,11 +126,11 @@ class billboard_location extends data_abstraction
 
 
         $this->set_query_type('SELECT');
-        $this->set_where("billboard_location_id = ? AND (billboard_location_id != ?)");
+        $this->set_where("question_choices_id = ? AND (question_choices_id != ?)");
 
         $bind_params = array('ii',
-                             &$this->fields['billboard_location_id']['value'],
-                             &$this->fields['billboard_location_id']['value']);
+                             &$this->fields['question_choices_id']['value'],
+                             &$this->fields['question_choices_id']['value']);
 
         $this->stmt_prepare($bind_params);
         $this->stmt_execute();

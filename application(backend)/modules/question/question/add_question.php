@@ -46,7 +46,33 @@ if(xsrf_guard())
         if($message=="")
         {
             $dbh_question->add($arr_form_data);
-            
+            $question_id = $dbh_question->auto_id;
+            require_once 'subclasses/question_answer.php';
+            $dbh_question = new question_answer;
+            for($a=0; $a<$question_answer_count;$a++)
+            {
+                
+                $param = array(
+                               'question_id'=>$question_id,
+                               'answer'=>$cf_question_answer_answer[$a]
+                              );
+                $dbh_question->add($param);
+            }
+
+            require_once 'subclasses/question_choices.php';
+            $dbh_question = new question_choices;
+            for($a=0; $a<$question_choices_count;$a++)
+            {
+                
+                $param = array(
+                               'question_id'=>$question_id,
+                               'choice_number'=>$cf_question_choices_choice_number[$a],
+                               'choice'=>$cf_question_choices_choice[$a],
+                               'is_correct'=>$cf_question_choices_is_correct[$a]
+                              );
+                $dbh_question->add($param);
+            }
+
 
             redirect("listview_question.php?$query_string");
         }

@@ -51,25 +51,6 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            require_once 'subclasses/company_ad.php';
-            $dbh_company_ad = new company_ad;
-            $dbh_company_ad->delete_many($arr_form_data);
-
-            for($a=0; $a<$company_ad_count;$a++)
-            {
-                $cf_company_ad_ad_start_date[$a] = $cf_company_ad_ad_start_date_year[$a] . '-' . $cf_company_ad_ad_start_date_month[$a] . '-' . $cf_company_ad_ad_start_date_day[$a];
-               $cf_company_ad_ad_end_date[$a] = $cf_company_ad_ad_end_date_year[$a] . '-' . $cf_company_ad_ad_end_date_month[$a] . '-' . $cf_company_ad_ad_end_date_day[$a];
-               
-                $param = array(
-                               'company_id'=>$cf_company_ad_company_id[$a],
-                               'billboard_loc'=>$billboard_location_id,
-                               'ad_start_date'=>$cf_company_ad_ad_start_date[$a],
-                               'ad_end_date'=>$cf_company_ad_ad_end_date[$a],
-                               'advertisement_name'=>$cf_company_ad_advertisement_name[$a]
-                              );
-                $dbh_company_ad->add($param);
-            }
-
 
             $dbh_billboard_location->edit($arr_form_data);
 
