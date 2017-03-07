@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2017 at 09:47 AM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 7.0.6
+-- Generation Time: Mar 07, 2017 at 05:44 PM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `billboard`
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `advertiser`
 --
 
-CREATE TABLE `advertiser` (
+CREATE TABLE IF NOT EXISTS `advertiser` (
   `advertiser_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
@@ -40,13 +40,13 @@ CREATE TABLE `advertiser` (
 -- Table structure for table `billboard_location`
 --
 
-CREATE TABLE `billboard_location` (
+CREATE TABLE IF NOT EXISTS `billboard_location` (
   `billboard_location_id` int(11) NOT NULL,
   `address` varchar(10000) NOT NULL,
   `postal_code` int(4) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `billboard_location`
@@ -56,7 +56,9 @@ INSERT INTO `billboard_location` (`billboard_location_id`, `address`, `postal_co
 (1, '623 Valencia St. Sampaloc Village Makati City', 1700, 0, 0),
 (2, 'Lot 10 Blk 5 Alliage Drive, Pasig City', 1892, 0, 0),
 (3, '687 Rainbow St. Westborough Village Paranaque City', 3456, 0, 0),
-(4, 'Blk 6 Lot 5 treelane Pasay City', 8754, 0, 0);
+(4, 'Blk 6 Lot 5 treelane Pasay City', 8754, 0, 0),
+(5, 'asd', 1233, 123, 123),
+(6, 'asd', 123, 123, 12);
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,7 @@ INSERT INTO `billboard_location` (`billboard_location_id`, `address`, `postal_co
 -- Table structure for table `cobalt_reporter`
 --
 
-CREATE TABLE `cobalt_reporter` (
+CREATE TABLE IF NOT EXISTS `cobalt_reporter` (
   `module_name` varchar(255) NOT NULL,
   `report_name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -84,7 +86,7 @@ CREATE TABLE `cobalt_reporter` (
 -- Table structure for table `cobalt_sst`
 --
 
-CREATE TABLE `cobalt_sst` (
+CREATE TABLE IF NOT EXISTS `cobalt_sst` (
   `auto_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -97,14 +99,14 @@ CREATE TABLE `cobalt_sst` (
 -- Table structure for table `company`
 --
 
-CREATE TABLE `company` (
+CREATE TABLE IF NOT EXISTS `company` (
   `company_id` int(11) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `company_address` varchar(10000) NOT NULL,
   `company_mobile_num1` char(11) NOT NULL,
   `company_mobile_num2` char(11) DEFAULT NULL,
   `company_tel_num` char(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company`
@@ -122,14 +124,14 @@ INSERT INTO `company` (`company_id`, `company_name`, `company_address`, `company
 -- Table structure for table `company_ad`
 --
 
-CREATE TABLE `company_ad` (
+CREATE TABLE IF NOT EXISTS `company_ad` (
   `company_ad_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `billboard_loc` int(11) NOT NULL,
   `ad_start_date` date NOT NULL,
   `ad_end_date` date NOT NULL,
   `advertisement_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company_ad`
@@ -144,13 +146,13 @@ INSERT INTO `company_ad` (`company_ad_id`, `company_id`, `billboard_loc`, `ad_st
 -- Table structure for table `person`
 --
 
-CREATE TABLE `person` (
+CREATE TABLE IF NOT EXISTS `person` (
   `person_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `middle_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `person`
@@ -166,12 +168,19 @@ INSERT INTO `person` (`person_id`, `first_name`, `middle_name`, `last_name`, `ge
 -- Table structure for table `player`
 --
 
-CREATE TABLE `player` (
+CREATE TABLE IF NOT EXISTS `player` (
   `player_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `player`
+--
+
+INSERT INTO `player` (`player_id`, `person_id`, `email`, `gender`) VALUES
+(1, 3, 'srmunar@gmail.com', 'Female');
 
 -- --------------------------------------------------------
 
@@ -179,7 +188,7 @@ CREATE TABLE `player` (
 -- Table structure for table `player_answered_question`
 --
 
-CREATE TABLE `player_answered_question` (
+CREATE TABLE IF NOT EXISTS `player_answered_question` (
   `player_answered_question_id` int(11) NOT NULL,
   `question` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
@@ -192,14 +201,14 @@ CREATE TABLE `player_answered_question` (
 -- Table structure for table `question`
 --
 
-CREATE TABLE `question` (
+CREATE TABLE IF NOT EXISTS `question` (
   `question_id` int(11) NOT NULL,
   `question` varchar(10000) NOT NULL,
   `answer` varchar(255) NOT NULL,
   `points` int(11) NOT NULL,
   `time_limit` int(11) NOT NULL,
   `company_ad` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `question`
@@ -214,7 +223,7 @@ INSERT INTO `question` (`question_id`, `question`, `answer`, `points`, `time_lim
 -- Table structure for table `question_answer`
 --
 
-CREATE TABLE `question_answer` (
+CREATE TABLE IF NOT EXISTS `question_answer` (
   `question_answer_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `answer` varchar(10000) NOT NULL
@@ -226,7 +235,7 @@ CREATE TABLE `question_answer` (
 -- Table structure for table `question_choices`
 --
 
-CREATE TABLE `question_choices` (
+CREATE TABLE IF NOT EXISTS `question_choices` (
   `question_choices_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `choice_number` int(11) NOT NULL,
@@ -240,14 +249,14 @@ CREATE TABLE `question_choices` (
 -- Table structure for table `system_log`
 --
 
-CREATE TABLE `system_log` (
+CREATE TABLE IF NOT EXISTS `system_log` (
   `entry_id` bigint(20) NOT NULL,
   `ip_address` varchar(255) NOT NULL,
   `user` varchar(255) NOT NULL,
   `datetime` datetime NOT NULL,
   `action` mediumtext NOT NULL,
   `module` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `system_log`
@@ -547,7 +556,127 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 (290, '::1', 'root', '2017-02-25 14:33:56', 'Logged in', '/ooap/login.php'),
 (291, '::1', 'root', '2017-02-25 14:34:22', 'Logged out', '/ooap/end.php'),
 (292, '::1', 'root', '2017-02-26 00:27:35', 'Logged in', '/ooap/login.php'),
-(293, '::1', 'root', '2017-03-06 16:31:16', 'Logged in', '/ooap/login.php');
+(293, '::1', 'root', '2017-03-06 16:31:16', 'Logged in', '/ooap/login.php'),
+(294, '::1', 'root', '2017-03-07 22:31:34', 'Pressed submit button', '/ooap/modules/billboar_location/billboard_location/add_billboard_location.php'),
+(295, '::1', 'root', '2017-03-07 22:31:47', 'Pressed submit button', '/ooap/modules/billboar_location/billboard_location/add_billboard_location.php'),
+(296, '::1', 'root', '2017-03-07 22:31:47', 'Query Executed: INSERT INTO billboard_location(billboard_location_id, address, postal_code, latitude, longitude) VALUES(?,?,?,?,?)\r\nArray\n(\n    [0] => isidd\n    [1] => \n    [2] => asd\n    [3] => 1233\n    [4] => 123\n    [5] => 123\n)\n', '/ooap/modules/billboar_location/billboard_location/add_billboard_location.php'),
+(297, '::1', 'root', '2017-03-07 22:32:37', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(298, '::1', 'root', '2017-03-07 22:32:37', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question choices\n    [2] => modules/question/question_choices/listview_question_choices.php\n    [3] => Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 83\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(299, '::1', 'root', '2017-03-07 22:32:55', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(300, '::1', 'root', '2017-03-07 22:32:55', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question answer\n    [2] => modules/question/question_answer/listview_question_answer.php\n    [3] => Question Answer\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 79\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(301, '::1', 'root', '2017-03-07 22:40:27', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(302, '::1', 'root', '2017-03-07 22:40:27', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Add question choices\n    [2] => modules/question/question_choices/add_question_choices.php\n    [3] => Add Question Choices\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 81\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(303, '::1', 'root', '2017-03-07 22:40:37', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(304, '::1', 'root', '2017-03-07 22:40:37', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Edit question choices\n    [2] => modules/question/question_choices/edit_question_choices.php\n    [3] => Edit Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 82\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(305, '::1', 'root', '2017-03-07 22:40:47', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(306, '::1', 'root', '2017-03-07 22:40:48', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Delete question choices\n    [2] => modules/question/question_choices/delete_question_choices.php\n    [3] => Delete Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 84\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(307, '::1', 'root', '2017-03-07 22:40:55', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(308, '::1', 'root', '2017-03-07 22:40:55', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Add question choices\n    [2] => modules/question/question_choices/add_question_choices.php\n    [3] => Add Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 81\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(309, '::1', 'root', '2017-03-07 22:43:56', 'Logged out', '/ooap/end.php'),
+(310, '::1', 'root', '2017-03-07 22:44:02', 'Logged in', '/ooap/login.php'),
+(311, '::1', 'root', '2017-03-07 22:45:25', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(312, '::1', 'root', '2017-03-07 22:45:25', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Add question choices\n    [2] => modules/question/question_choices/add_question_choices.php\n    [3] => Add Question Choices\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 4\n    [10] => 81\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(313, '::1', 'root', '2017-03-07 22:45:38', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(314, '::1', 'root', '2017-03-07 22:45:38', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Edit question choices\n    [2] => modules/question/question_choices/edit_question_choices.php\n    [3] => Edit Question Choices\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 4\n    [10] => 82\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(315, '::1', 'root', '2017-03-07 22:45:46', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(316, '::1', 'root', '2017-03-07 22:45:46', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Edit question choices\n    [2] => modules/question/question_choices/edit_question_choices.php\n    [3] => Edit Question Choices\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 3\n    [10] => 82\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(317, '::1', 'root', '2017-03-07 22:45:57', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(318, '::1', 'root', '2017-03-07 22:45:57', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Delete question choices\n    [2] => modules/question/question_choices/delete_question_choices.php\n    [3] => Delete Question Choices\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 2\n    [10] => 84\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(319, '::1', 'root', '2017-03-07 22:46:07', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(320, '::1', 'root', '2017-03-07 22:46:07', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question choices\n    [2] => modules/question/question_choices/listview_question_choices.php\n    [3] => Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 5\n    [10] => 83\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(321, '::1', 'root', '2017-03-07 22:46:33', 'Pressed submit button', '/ooap/sysadmin/edit_user_passport_groups.php'),
+(322, '::1', 'root', '2017-03-07 22:46:34', 'Query Executed: UPDATE user_passport_groups SET passport_group = ?, priority = ?, icon = ? WHERE passport_group_id = ?\r\nArray\n(\n    [0] => sisi\n    [1] => OAAP\n    [2] => 5\n    [3] => blue_folder3.png\n    [4] => 4\n)\n', '/ooap/sysadmin/edit_user_passport_groups.php'),
+(323, '::1', 'root', '2017-03-07 22:47:23', 'Pressed cancel button', '/ooap/sst/add_cobalt_sst.php'),
+(324, '::1', 'root', '2017-03-07 22:48:24', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(325, '::1', 'root', '2017-03-07 22:48:24', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question choices\n    [2] => modules/question/question_choices/listview_question_choices.php\n    [3] => Question Choices\n    [4] => \n    [5] => 1\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 5\n    [10] => 83\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(326, '::1', 'root', '2017-03-07 22:58:20', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(327, '::1', 'root', '2017-03-07 22:58:20', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question choices\n    [2] => modules/question/question_choices/listview_question_choices.php\n    [3] => Question Choices\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 5\n    [10] => 83\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(328, '::1', 'root', '2017-03-07 22:59:17', 'Pressed cancel button', '/ooap/sysadmin/add_user_links.php'),
+(329, '::1', 'root', '2017-03-07 23:00:49', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(330, '::1', 'root', '2017-03-07 23:00:49', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Delete question answer\n    [2] => modules/question/question_answer/delete_question_answer.php\n    [3] => Delete Question Answer\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 80\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(331, '::1', 'root', '2017-03-07 23:00:56', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(332, '::1', 'root', '2017-03-07 23:00:56', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Add question answer\n    [2] => modules/question/question_answer/add_question_answer.php\n    [3] => Add Question Answer\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 77\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(333, '::1', 'root', '2017-03-07 23:01:02', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(334, '::1', 'root', '2017-03-07 23:01:02', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Edit question answer\n    [2] => modules/question/question_answer/edit_question_answer.php\n    [3] => Edit Question Answer\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 78\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(335, '::1', 'root', '2017-03-07 23:01:28', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(336, '::1', 'root', '2017-03-07 23:01:29', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question answer\n    [2] => modules/question/question_answer/listview_question_answer.php\n    [3] => Question Answer\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 5\n    [10] => 79\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(337, '::1', 'root', '2017-03-07 23:07:20', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(338, '::1', 'root', '2017-03-07 23:07:21', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Add question\n    [2] => modules/question/question/add_question.php\n    [3] => Add Question\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 73\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(339, '::1', 'root', '2017-03-07 23:07:28', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(340, '::1', 'root', '2017-03-07 23:07:28', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Edit question\n    [2] => modules/question/question/edit_question.php\n    [3] => Edit Question\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 74\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(341, '::1', 'root', '2017-03-07 23:07:34', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(342, '::1', 'root', '2017-03-07 23:07:34', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View question\n    [2] => modules/question/question/listview_question.php\n    [3] => Question\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 75\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(343, '::1', 'root', '2017-03-07 23:07:39', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(344, '::1', 'root', '2017-03-07 23:07:40', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Delete question\n    [2] => modules/question/question/delete_question.php\n    [3] => Delete Question\n    [4] => \n    [5] => 3\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 76\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(345, '::1', 'root', '2017-03-07 23:13:49', 'Pressed cancel button', '/ooap/sysadmin/edit_user_links.php'),
+(346, '::1', 'root', '2017-03-07 23:14:20', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(347, '::1', 'root', '2017-03-07 23:14:21', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View advertiser\n    [2] => modules/advertiser/advertiser/listview_advertiser.php\n    [3] => Advertiser\n    [4] => \n    [5] => 4\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 39\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(348, '::1', 'root', '2017-03-07 23:14:55', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(349, '::1', 'root', '2017-03-07 23:14:55', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View advertiser\n    [2] => modules/advertiser/advertiser/listview_advertiser.php\n    [3] => Advertiser\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 39\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(350, '::1', 'root', '2017-03-07 23:15:27', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(351, '::1', 'root', '2017-03-07 23:15:27', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View advertiser\n    [2] => modules/advertiser/advertiser/listview_advertiser.php\n    [3] => Advertiser\n    [4] => \n    [5] => 4\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 39\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(352, '::1', 'root', '2017-03-07 23:16:00', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(353, '::1', 'root', '2017-03-07 23:16:00', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View advertiser\n    [2] => modules/advertiser/advertiser/listview_advertiser.php\n    [3] => Advertiser\n    [4] => \n    [5] => 3\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 39\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(354, '::1', 'root', '2017-03-07 23:17:48', 'Query executed: DELETE FROM user_passport WHERE username=''root''', '/ooap/sysadmin/set_user_passports.php'),
+(355, '::1', 'root', '2017-03-07 23:17:48', 'Query executed: INSERT INTO user_passport(username, link_id) VALUES(''root'', ''37''),(''root'', ''41''),(''root'', ''69''),(''root'', ''33''),(''root'', ''45''),(''root'', ''49''),(''root'', ''4''),(''root'', ''53''),(''root'', ''57''),(''root'', ''73''),(''root'', ''77''),(''root'', ''81''),(''root'', ''16''),(''root'', ''28''),(''root'', ''65''),(''root'', ''8''),(''root'', ''20''),(''root'', ''24''),(''root'', ''12''),(''root'', ''39''),(''root'', ''43''),(''root'', ''71''),(''root'', ''35''),(''root'', ''47''),(''root'', ''51''),(''root'', ''40''),(''root'', ''44''),(''root'', ''72''),(''root'', ''36''),(''root'', ''48''),(''root'', ''52''),(''root'', ''7''),(''root'', ''56''),(''root'', ''60''),(''root'', ''76''),(''root'', ''80''),(''root'', ''84''),(''root'', ''19''),(''root'', ''31''),(''root'', ''68''),(''root'', ''11''),(''root'', ''23''),(''root'', ''27''),(''root'', ''15''),(''root'', ''38''),(''root'', ''42''),(''root'', ''70''),(''root'', ''34''),(''root'', ''46''),(''root'', ''50''),(''root'', ''5''),(''root'', ''54''),(''root'', ''58''),(''root'', ''74''),(''root'', ''78''),(''root'', ''82''),(''root'', ''17''),(''root'', ''29''),(''root'', ''66''),(''root'', ''9''),(''root'', ''21''),(''root'', ''25''),(''root'', ''13''),(''root'', ''1''),(''root'', ''6''),(''root'', ''55''),(''root'', ''59''),(''root'', ''75''),(''root'', ''79''),(''root'', ''83''),(''root'', ''32''),(''root'', ''3''),(''root'', ''2''),(''root'', ''18''),(''root'', ''30''),(''root'', ''67''),(''root'', ''10''),(''root'', ''22''),(''root'', ''26''),(''root'', ''14'')', '/ooap/sysadmin/set_user_passports.php'),
+(356, '::1', 'root', '2017-03-07 23:17:48', 'Query executed: UPDATE user SET role_id=''0'' WHERE username=''root''', '/ooap/sysadmin/set_user_passports.php'),
+(357, '::1', 'root', '2017-03-07 23:18:17', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(358, '::1', 'root', '2017-03-07 23:18:33', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(359, '::1', 'root', '2017-03-07 23:20:18', 'Pressed cancel button', '/ooap/modules/question/question_choices/add_question_choices.php'),
+(360, '::1', 'root', '2017-03-07 23:20:31', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(361, '::1', 'root', '2017-03-07 23:25:18', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(362, '::1', 'root', '2017-03-07 23:30:26', 'Logged in', '/backup/login.php'),
+(363, '::1', 'root', '2017-03-07 23:33:26', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(364, '::1', 'root', '2017-03-07 23:35:00', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(365, '::1', 'root', '2017-03-07 23:35:27', 'Pressed cancel button', '/ooap/modules/question/question_answer/add_question_answer.php'),
+(366, '::1', 'root', '2017-03-07 23:35:58', 'Pressed cancel button', '/ooap/modules/question/question_choices/add_question_choices.php'),
+(367, '::1', 'root', '2017-03-07 23:37:41', 'Pressed submit button', '/ooap/modules/question/question/add_question.php'),
+(368, '::1', 'root', '2017-03-07 23:37:53', 'Pressed submit button', '/ooap/modules/question/question/add_question.php'),
+(369, '::1', 'root', '2017-03-07 23:37:54', 'Query Executed: INSERT INTO question(question_id, question, answer, points, time_limit, company_ad) VALUES(?,?,?,?,?,?)\r\nArray\n(\n    [0] => issiii\n    [1] => \n    [2] => asd\n    [3] => asd\n    [4] => 123\n    [5] => 123\n    [6] => 213333\n)\n', '/ooap/modules/question/question/add_question.php'),
+(370, '::1', 'root', '2017-03-07 23:39:28', 'Pressed submit button', '/ooap/modules/question/question/add_question.php'),
+(371, '::1', 'root', '2017-03-07 23:39:28', 'Query Executed: INSERT INTO question(question_id, question, answer, points, time_limit, company_ad) VALUES(?,?,?,?,?,?)\r\nArray\n(\n    [0] => issiii\n    [1] => \n    [2] => asd\n    [3] => asd\n    [4] => 123\n    [5] => 123\n    [6] => 213333\n)\n', '/ooap/modules/question/question/add_question.php'),
+(372, '::1', 'root', '2017-03-07 23:39:59', 'Pressed submit button', '/ooap/modules/question/question/add_question.php'),
+(373, '::1', 'root', '2017-03-07 23:39:59', 'Query Executed: INSERT INTO question(question_id, question, answer, points, time_limit, company_ad) VALUES(?,?,?,?,?,?)\r\nArray\n(\n    [0] => issiii\n    [1] => \n    [2] => asd\n    [3] => asd\n    [4] => 123\n    [5] => 123\n    [6] => 213333\n)\n', '/ooap/modules/question/question/add_question.php'),
+(374, '::1', 'root', '2017-03-07 23:40:04', 'Pressed delete button', '/ooap/modules/question/question/delete_question.php'),
+(375, '::1', 'root', '2017-03-07 23:40:04', 'Query Executed: DELETE FROM question_answer WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 2\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(376, '::1', 'root', '2017-03-07 23:40:04', 'Query Executed: DELETE FROM question_choices WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 2\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(377, '::1', 'root', '2017-03-07 23:40:04', 'Query Executed: DELETE FROM question WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 2\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(378, '::1', 'root', '2017-03-07 23:40:06', 'Pressed delete button', '/ooap/modules/question/question/delete_question.php'),
+(379, '::1', 'root', '2017-03-07 23:40:06', 'Query Executed: DELETE FROM question_answer WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 3\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(380, '::1', 'root', '2017-03-07 23:40:06', 'Query Executed: DELETE FROM question_choices WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 3\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(381, '::1', 'root', '2017-03-07 23:40:06', 'Query Executed: DELETE FROM question WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 3\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(382, '::1', 'root', '2017-03-07 23:40:08', 'Pressed delete button', '/ooap/modules/question/question/delete_question.php'),
+(383, '::1', 'root', '2017-03-07 23:40:08', 'Query Executed: DELETE FROM question_answer WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 4\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(384, '::1', 'root', '2017-03-07 23:40:08', 'Query Executed: DELETE FROM question_choices WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 4\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(385, '::1', 'root', '2017-03-07 23:40:09', 'Query Executed: DELETE FROM question WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 4\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(386, '::1', 'root', '2017-03-07 23:43:10', 'Pressed submit button', '/ooap/modules/question/question/add_question.php'),
+(387, '::1', 'root', '2017-03-07 23:43:10', 'Query Executed: INSERT INTO question(question_id, question, answer, points, time_limit, company_ad) VALUES(?,?,?,?,?,?)\r\nArray\n(\n    [0] => issiii\n    [1] => \n    [2] => asd\n    [3] => 12333\n    [4] => 123\n    [5] => 1233\n    [6] => 1\n)\n', '/ooap/modules/question/question/add_question.php'),
+(388, '::1', 'root', '2017-03-07 23:43:14', 'Pressed delete button', '/ooap/modules/question/question/delete_question.php'),
+(389, '::1', 'root', '2017-03-07 23:43:14', 'Query Executed: DELETE FROM question_answer WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 5\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(390, '::1', 'root', '2017-03-07 23:43:14', 'Query Executed: DELETE FROM question_choices WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 5\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(391, '::1', 'root', '2017-03-07 23:43:14', 'Query Executed: DELETE FROM question WHERE question_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 5\n)\n', '/ooap/modules/question/question/delete_question.php'),
+(392, '::1', 'root', '2017-03-07 23:50:55', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(393, '::1', 'root', '2017-03-07 23:50:56', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => Delete billboard location\n    [2] => modules/billboar_location/billboard_location/delete_billboard_location.php\n    [3] => Delete Billboard Location\n    [4] => \n    [5] => 4\n    [6] => No\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 44\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(394, '::1', 'root', '2017-03-07 23:51:02', 'Pressed delete button', '/ooap/sysadmin/delete_user_links.php'),
+(395, '::1', 'root', '2017-03-07 23:51:02', 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 41\n)\n', '/ooap/sysadmin/delete_user_links.php'),
+(396, '::1', 'root', '2017-03-07 23:51:29', 'Pressed submit button', '/ooap/sysadmin/edit_user_links.php'),
+(397, '::1', 'root', '2017-03-07 23:51:29', 'Query Executed: UPDATE user_links SET name = ?, target = ?, descriptive_title = ?, description = ?, passport_group_id = ?, show_in_tasklist = ?, status = ?, icon = ?, priority = ? WHERE link_id = ?\r\nArray\n(\n    [0] => ssssisssii\n    [1] => View billboard location\n    [2] => modules/billboar_location/billboard_location/listview_billboard_location.php\n    [3] => Billboard Location\n    [4] => \n    [5] => 4\n    [6] => Yes\n    [7] => On\n    [8] => form3.png\n    [9] => 0\n    [10] => 71\n)\n', '/ooap/sysadmin/edit_user_links.php'),
+(398, '::1', 'root', '2017-03-07 23:51:37', 'Pressed delete button', '/ooap/sysadmin/delete_user_links.php'),
+(399, '::1', 'root', '2017-03-07 23:51:37', 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 69\n)\n', '/ooap/sysadmin/delete_user_links.php'),
+(400, '::1', 'root', '2017-03-07 23:52:16', 'Pressed delete button', '/ooap/sysadmin/delete_user_links.php'),
+(401, '::1', 'root', '2017-03-07 23:52:16', 'Query Executed: DELETE FROM user_links WHERE link_id = ?\r\nArray\n(\n    [0] => i\n    [1] => 71\n)\n', '/ooap/sysadmin/delete_user_links.php'),
+(402, '::1', 'root', '2017-03-07 23:59:52', 'Query executed: DELETE FROM user_passport WHERE username=''root''', '/ooap/sysadmin/set_user_passports.php'),
+(403, '::1', 'root', '2017-03-07 23:59:52', 'Query executed: INSERT INTO user_passport(username, link_id) VALUES(''root'', ''37''),(''root'', ''41''),(''root'', ''33''),(''root'', ''45''),(''root'', ''49''),(''root'', ''4''),(''root'', ''53''),(''root'', ''57''),(''root'', ''73''),(''root'', ''77''),(''root'', ''81''),(''root'', ''16''),(''root'', ''28''),(''root'', ''65''),(''root'', ''8''),(''root'', ''20''),(''root'', ''24''),(''root'', ''12''),(''root'', ''39''),(''root'', ''43''),(''root'', ''35''),(''root'', ''47''),(''root'', ''51''),(''root'', ''40''),(''root'', ''44''),(''root'', ''72''),(''root'', ''36''),(''root'', ''48''),(''root'', ''52''),(''root'', ''7''),(''root'', ''56''),(''root'', ''60''),(''root'', ''76''),(''root'', ''80''),(''root'', ''84''),(''root'', ''19''),(''root'', ''31''),(''root'', ''68''),(''root'', ''11''),(''root'', ''23''),(''root'', ''27''),(''root'', ''15''),(''root'', ''38''),(''root'', ''42''),(''root'', ''70''),(''root'', ''34''),(''root'', ''46''),(''root'', ''50''),(''root'', ''5''),(''root'', ''54''),(''root'', ''58''),(''root'', ''74''),(''root'', ''78''),(''root'', ''82''),(''root'', ''17''),(''root'', ''29''),(''root'', ''66''),(''root'', ''9''),(''root'', ''21''),(''root'', ''25''),(''root'', ''13''),(''root'', ''1''),(''root'', ''6''),(''root'', ''55''),(''root'', ''59''),(''root'', ''75''),(''root'', ''79''),(''root'', ''83''),(''root'', ''32''),(''root'', ''3''),(''root'', ''2''),(''root'', ''18''),(''root'', ''30''),(''root'', ''67''),(''root'', ''10''),(''root'', ''22''),(''root'', ''26''),(''root'', ''14'')', '/ooap/sysadmin/set_user_passports.php'),
+(404, '::1', 'root', '2017-03-07 23:59:53', 'Query executed: UPDATE user SET role_id=''0'' WHERE username=''root''', '/ooap/sysadmin/set_user_passports.php'),
+(405, '::1', 'root', '2017-03-08 00:01:33', 'Pressed cancel button', '/ooap/modules/advertiser/advertiser/add_advertiser.php'),
+(406, '::1', 'root', '2017-03-08 00:09:48', 'Pressed cancel button', '/ooap/modules/billboard_location/billboard_location/add_billboard_location.php'),
+(407, '::1', 'root', '2017-03-08 00:11:05', 'Pressed submit button', '/ooap/modules/player/player/add_player.php'),
+(408, '::1', 'root', '2017-03-08 00:11:05', 'Query Executed: INSERT INTO player(player_id, person_id, email, gender) VALUES(?,?,?,?)\r\nArray\n(\n    [0] => iiss\n    [1] => \n    [2] => 3\n    [3] => srmunar@gmail.com\n    [4] => Female\n)\n', '/ooap/modules/player/player/add_player.php'),
+(409, '::1', 'root', '2017-03-08 00:11:28', 'Pressed cancel button', '/ooap/modules/question/question_choices/add_question_choices.php'),
+(410, '::1', 'root', '2017-03-08 00:11:52', 'Pressed cancel button', '/ooap/modules/trivia/trivia/listview_trivia.php'),
+(411, '::1', 'root', '2017-03-08 00:22:35', 'Pressed submit button', '/ooap/modules/billboard_location/billboard_location/add_billboard_location.php'),
+(412, '::1', 'root', '2017-03-08 00:24:11', 'Pressed submit button', '/ooap/modules/billboard_location/billboard_location/add_billboard_location.php'),
+(413, '::1', 'root', '2017-03-08 00:24:11', 'Query Executed: INSERT INTO billboard_location(billboard_location_id, address, postal_code, latitude, longitude) VALUES(?,?,?,?,?)\r\nArray\n(\n    [0] => isidd\n    [1] => \n    [2] => asd\n    [3] => 123\n    [4] => 123\n    [5] => 12\n)\n', '/ooap/modules/billboard_location/billboard_location/add_billboard_location.php');
 
 -- --------------------------------------------------------
 
@@ -555,7 +684,7 @@ INSERT INTO `system_log` (`entry_id`, `ip_address`, `user`, `datetime`, `action`
 -- Table structure for table `system_settings`
 --
 
-CREATE TABLE `system_settings` (
+CREATE TABLE IF NOT EXISTS `system_settings` (
   `setting` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -576,7 +705,7 @@ INSERT INTO `system_settings` (`setting`, `value`) VALUES
 -- Table structure for table `system_skins`
 --
 
-CREATE TABLE `system_skins` (
+CREATE TABLE IF NOT EXISTS `system_skins` (
   `skin_id` int(11) NOT NULL,
   `skin_name` varchar(255) NOT NULL,
   `header` varchar(255) NOT NULL,
@@ -586,7 +715,7 @@ CREATE TABLE `system_skins` (
   `fonts_css` varchar(255) NOT NULL,
   `override_css` varchar(255) NOT NULL,
   `icon_set` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `system_skins`
@@ -612,11 +741,11 @@ INSERT INTO `system_skins` (`skin_id`, `skin_name`, `header`, `footer`, `master_
 -- Table structure for table `trivia`
 --
 
-CREATE TABLE `trivia` (
+CREATE TABLE IF NOT EXISTS `trivia` (
   `trivia_id` int(11) NOT NULL,
   `trivia` varchar(10000) NOT NULL,
   `company` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `trivia`
@@ -631,7 +760,7 @@ INSERT INTO `trivia` (`trivia_id`, `trivia`, `company`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
@@ -647,7 +776,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`username`, `password`, `salt`, `iteration`, `method`, `person_id`, `role_id`, `skin_id`) VALUES
-('root', '$2y$12$utytNn87AM0Lm.D6jKKjwuX7PJ6SCxa4otmaq3.x0T7LFD5y6fF/i', 'utytNn87AM0Lm+D6jKKjww', 12, 'blowfish', 1, 1, 6);
+('root', '$2y$12$utytNn87AM0Lm.D6jKKjwuX7PJ6SCxa4otmaq3.x0T7LFD5y6fF/i', 'utytNn87AM0Lm+D6jKKjww', 12, 'blowfish', 1, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -655,7 +784,7 @@ INSERT INTO `user` (`username`, `password`, `salt`, `iteration`, `method`, `pers
 -- Table structure for table `user_links`
 --
 
-CREATE TABLE `user_links` (
+CREATE TABLE IF NOT EXISTS `user_links` (
   `link_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
@@ -666,7 +795,7 @@ CREATE TABLE `user_links` (
   `status` varchar(255) NOT NULL,
   `icon` varchar(255) NOT NULL,
   `priority` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_links`
@@ -713,10 +842,10 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 (38, 'Edit advertiser', 'modules/advertiser/advertiser/edit_advertiser.php', 'Edit Advertiser', '', 3, 'No', 'On', 'form3.png', 0),
 (39, 'View advertiser', 'modules/advertiser/advertiser/listview_advertiser.php', 'Advertiser', '', 3, 'Yes', 'On', 'form3.png', 0),
 (40, 'Delete advertiser', 'modules/advertiser/advertiser/delete_advertiser.php', 'Delete Advertiser', '', 3, 'No', 'On', 'form3.png', 0),
-(41, 'Add billboard location', 'modules/billboar_location/billboard_location/add_billboard_location.php', 'Add Billboard Location', '', 4, 'No', 'On', 'form3.png', 0),
-(42, 'Edit billboard location', 'modules/billboar_location/billboard_location/edit_billboard_location.php', 'Edit Billboard Location', '', 4, 'No', 'On', 'form3.png', 0),
-(43, 'View billboard location', 'modules/billboar_location/billboard_location/listview_billboard_location.php', 'Billboard Location', '', 4, 'Yes', 'On', 'form3.png', 0),
-(44, 'Delete billboard location', 'modules/billboar_location/billboard_location/delete_billboard_location.php', 'Delete Billboard Location', '', 1, 'No', 'On', 'form3.png', 0),
+(41, 'Add billboard location', 'modules/billboard_location/billboard_location/add_billboard_location.php', 'Add Billboard Location', '', 4, 'No', 'On', 'form3.png', 0),
+(42, 'Edit billboard location', 'modules/billboard_location/billboard_location/edit_billboard_location.php', 'Edit Billboard Location', '', 4, 'No', 'On', 'form3.png', 0),
+(43, 'View billboard location', 'modules/billboard_location/billboard_location/listview_billboard_location.php', 'Billboard Location', '', 4, 'Yes', 'On', 'form3.png', 0),
+(44, 'Delete billboard location', 'modules/billboard_location/billboard_location/delete_billboard_location.php', 'Delete Billboard Location', '', 4, 'No', 'On', 'form3.png', 0),
 (45, 'Add company', 'modules/company/company/add_company.php', 'Add Company', '', 4, 'No', 'On', 'form3.png', 0),
 (46, 'Edit company', 'modules/company/company/edit_company.php', 'Edit Company', '', 4, 'No', 'On', 'form3.png', 0),
 (47, 'View company', 'modules/company/company/listview_company.php', 'Company', '', 4, 'Yes', 'On', 'form3.png', 0),
@@ -733,14 +862,22 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 (58, 'Edit player answered question', 'modules/player/player_answered_question/edit_player_answered_question.php', 'Edit Player Answered Question', '', 4, 'No', 'On', 'form3.png', 0),
 (59, 'View player answered question', 'modules/player/player_answered_question/listview_player_answered_question.php', 'Player Answered Question', '', 4, 'Yes', 'On', 'form3.png', 0),
 (60, 'Delete player answered question', 'modules/player/player_answered_question/delete_player_answered_question.php', 'Delete Player Answered Question', '', 4, 'No', 'On', 'form3.png', 0),
-(61, 'Add question', 'modules/question/question/add_question.php', 'Add Question', '', 3, 'No', 'On', 'form3.png', 0),
-(62, 'Edit question', 'modules/question/question/edit_question.php', 'Edit Question', '', 3, 'No', 'On', 'form3.png', 0),
-(63, 'View question', 'modules/question/question/listview_question.php', 'Question', '', 3, 'Yes', 'On', 'form3.png', 0),
-(64, 'Delete question', 'modules/question/question/delete_question.php', 'Delete Question', '', 3, 'No', 'On', 'form3.png', 0),
 (65, 'Add trivia', 'modules/trivia/trivia/add_trivia.php', 'Add Trivia', '', 3, 'No', 'On', 'form3.png', 0),
 (66, 'Edit trivia', 'modules/trivia/trivia/edit_trivia.php', 'Edit Trivia', '', 3, 'No', 'On', 'form3.png', 0),
 (67, 'View trivia', 'modules/trivia/trivia/listview_trivia.php', 'Trivia', '', 3, 'Yes', 'On', 'form3.png', 0),
-(68, 'Delete trivia', 'modules/trivia/trivia/delete_trivia.php', 'Delete Trivia', '', 3, 'No', 'On', 'form3.png', 0);
+(68, 'Delete trivia', 'modules/trivia/trivia/delete_trivia.php', 'Delete Trivia', '', 3, 'No', 'On', 'form3.png', 0),
+(73, 'Add question', 'modules/question/question/add_question.php', 'Add Question', '', 3, 'No', 'On', 'form3.png', 0),
+(74, 'Edit question', 'modules/question/question/edit_question.php', 'Edit Question', '', 3, 'No', 'On', 'form3.png', 0),
+(75, 'View question', 'modules/question/question/listview_question.php', 'Question', '', 3, 'Yes', 'On', 'form3.png', 0),
+(76, 'Delete question', 'modules/question/question/delete_question.php', 'Delete Question', '', 3, 'No', 'On', 'form3.png', 0),
+(77, 'Add question answer', 'modules/question/question_answer/add_question_answer.php', 'Add Question Answer', '', 3, 'No', 'On', 'form3.png', 0),
+(78, 'Edit question answer', 'modules/question/question_answer/edit_question_answer.php', 'Edit Question Answer', '', 3, 'No', 'On', 'form3.png', 0),
+(79, 'View question answer', 'modules/question/question_answer/listview_question_answer.php', 'Question Answer', '', 3, 'Yes', 'On', 'form3.png', 5),
+(80, 'Delete question answer', 'modules/question/question_answer/delete_question_answer.php', 'Delete Question Answer', '', 3, 'No', 'On', 'form3.png', 0),
+(81, 'Add question choices', 'modules/question/question_choices/add_question_choices.php', 'Add Question Choices', '', 3, 'No', 'On', 'form3.png', 4),
+(82, 'Edit question choices', 'modules/question/question_choices/edit_question_choices.php', 'Edit Question Choices', '', 3, 'No', 'On', 'form3.png', 3),
+(83, 'View question choices', 'modules/question/question_choices/listview_question_choices.php', 'Question Choices', '', 3, 'Yes', 'On', 'form3.png', 5),
+(84, 'Delete question choices', 'modules/question/question_choices/delete_question_choices.php', 'Delete Question Choices', '', 3, 'No', 'On', 'form3.png', 2);
 
 -- --------------------------------------------------------
 
@@ -748,7 +885,7 @@ INSERT INTO `user_links` (`link_id`, `name`, `target`, `descriptive_title`, `des
 -- Table structure for table `user_passport`
 --
 
-CREATE TABLE `user_passport` (
+CREATE TABLE IF NOT EXISTS `user_passport` (
   `username` varchar(255) NOT NULL,
   `link_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -818,14 +955,24 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 ('root', 58),
 ('root', 59),
 ('root', 60),
-('root', 61),
-('root', 62),
-('root', 63),
-('root', 64),
 ('root', 65),
 ('root', 66),
 ('root', 67),
 ('root', 68),
+('root', 70),
+('root', 72),
+('root', 73),
+('root', 74),
+('root', 75),
+('root', 76),
+('root', 77),
+('root', 78),
+('root', 79),
+('root', 80),
+('root', 81),
+('root', 82),
+('root', 83),
+('root', 84),
 ('srmunar', 37),
 ('srmunar', 38),
 ('srmunar', 39),
@@ -849,12 +996,12 @@ INSERT INTO `user_passport` (`username`, `link_id`) VALUES
 -- Table structure for table `user_passport_groups`
 --
 
-CREATE TABLE `user_passport_groups` (
+CREATE TABLE IF NOT EXISTS `user_passport_groups` (
   `passport_group_id` int(11) NOT NULL,
   `passport_group` varchar(255) NOT NULL,
   `priority` int(11) NOT NULL,
   `icon` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_passport_groups`
@@ -872,11 +1019,11 @@ INSERT INTO `user_passport_groups` (`passport_group_id`, `passport_group`, `prio
 -- Table structure for table `user_role`
 --
 
-CREATE TABLE `user_role` (
+CREATE TABLE IF NOT EXISTS `user_role` (
   `role_id` int(11) NOT NULL,
   `role` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_role`
@@ -893,7 +1040,7 @@ INSERT INTO `user_role` (`role_id`, `role`, `description`) VALUES
 -- Table structure for table `user_role_links`
 --
 
-CREATE TABLE `user_role_links` (
+CREATE TABLE IF NOT EXISTS `user_role_links` (
   `role_id` int(11) NOT NULL,
   `link_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1032,9 +1179,7 @@ INSERT INTO `user_role_links` (`role_id`, `link_id`) VALUES
 -- Indexes for table `advertiser`
 --
 ALTER TABLE `advertiser`
-  ADD PRIMARY KEY (`advertiser_id`),
-  ADD KEY `company_id` (`company_id`),
-  ADD KEY `person_id` (`person_id`);
+  ADD PRIMARY KEY (`advertiser_id`), ADD KEY `company_id` (`company_id`), ADD KEY `person_id` (`person_id`);
 
 --
 -- Indexes for table `billboard_location`
@@ -1064,9 +1209,7 @@ ALTER TABLE `company`
 -- Indexes for table `company_ad`
 --
 ALTER TABLE `company_ad`
-  ADD PRIMARY KEY (`company_ad_id`),
-  ADD KEY `company_id` (`company_id`),
-  ADD KEY `billboard_loc` (`billboard_loc`);
+  ADD PRIMARY KEY (`company_ad_id`), ADD KEY `company_id` (`company_id`), ADD KEY `billboard_loc` (`billboard_loc`);
 
 --
 -- Indexes for table `person`
@@ -1078,17 +1221,13 @@ ALTER TABLE `person`
 -- Indexes for table `player`
 --
 ALTER TABLE `player`
-  ADD PRIMARY KEY (`player_id`),
-  ADD KEY `person_id` (`person_id`),
-  ADD KEY `person_id_2` (`person_id`);
+  ADD PRIMARY KEY (`player_id`), ADD KEY `person_id` (`person_id`), ADD KEY `person_id_2` (`person_id`);
 
 --
 -- Indexes for table `player_answered_question`
 --
 ALTER TABLE `player_answered_question`
-  ADD PRIMARY KEY (`player_answered_question_id`),
-  ADD KEY `question` (`question`),
-  ADD KEY `player_id` (`player_id`);
+  ADD PRIMARY KEY (`player_answered_question_id`), ADD KEY `question` (`question`), ADD KEY `player_id` (`player_id`);
 
 --
 -- Indexes for table `question`
@@ -1100,16 +1239,13 @@ ALTER TABLE `question`
 -- Indexes for table `question_answer`
 --
 ALTER TABLE `question_answer`
-  ADD PRIMARY KEY (`question_answer_id`),
-  ADD KEY `question_id` (`question_id`),
-  ADD KEY `answer` (`answer`(767));
+  ADD PRIMARY KEY (`question_answer_id`), ADD KEY `question_id` (`question_id`), ADD KEY `answer` (`answer`(767));
 
 --
 -- Indexes for table `question_choices`
 --
 ALTER TABLE `question_choices`
-  ADD PRIMARY KEY (`question_choices_id`),
-  ADD KEY `question_idx` (`question_id`);
+  ADD PRIMARY KEY (`question_choices_id`), ADD KEY `question_idx` (`question_id`);
 
 --
 -- Indexes for table `system_log`
@@ -1133,8 +1269,7 @@ ALTER TABLE `system_skins`
 -- Indexes for table `trivia`
 --
 ALTER TABLE `trivia`
-  ADD PRIMARY KEY (`trivia_id`),
-  ADD KEY `company` (`company`);
+  ADD PRIMARY KEY (`trivia_id`), ADD KEY `company` (`company`);
 
 --
 -- Indexes for table `user`
@@ -1146,8 +1281,7 @@ ALTER TABLE `user`
 -- Indexes for table `user_links`
 --
 ALTER TABLE `user_links`
-  ADD PRIMARY KEY (`link_id`),
-  ADD KEY `name` (`name`);
+  ADD PRIMARY KEY (`link_id`), ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `user_passport`
@@ -1186,7 +1320,7 @@ ALTER TABLE `advertiser`
 -- AUTO_INCREMENT for table `billboard_location`
 --
 ALTER TABLE `billboard_location`
-  MODIFY `billboard_location_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `billboard_location_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `cobalt_sst`
 --
@@ -1196,22 +1330,22 @@ ALTER TABLE `cobalt_sst`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `company_ad`
 --
 ALTER TABLE `company_ad`
-  MODIFY `company_ad_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `company_ad_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `player`
 --
 ALTER TABLE `player`
-  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `player_answered_question`
 --
@@ -1221,7 +1355,7 @@ ALTER TABLE `player_answered_question`
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `question_answer`
 --
@@ -1236,32 +1370,32 @@ ALTER TABLE `question_choices`
 -- AUTO_INCREMENT for table `system_log`
 --
 ALTER TABLE `system_log`
-  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=294;
+  MODIFY `entry_id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=414;
 --
 -- AUTO_INCREMENT for table `system_skins`
 --
 ALTER TABLE `system_skins`
-  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `skin_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `trivia`
 --
 ALTER TABLE `trivia`
-  MODIFY `trivia_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `trivia_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user_links`
 --
 ALTER TABLE `user_links`
-  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `link_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=85;
 --
 -- AUTO_INCREMENT for table `user_passport_groups`
 --
 ALTER TABLE `user_passport_groups`
-  MODIFY `passport_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `passport_group_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -1270,45 +1404,45 @@ ALTER TABLE `user_role`
 -- Constraints for table `advertiser`
 --
 ALTER TABLE `advertiser`
-  ADD CONSTRAINT `advertiser_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`);
+ADD CONSTRAINT `advertiser_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`);
 
 --
 -- Constraints for table `company_ad`
 --
 ALTER TABLE `company_ad`
-  ADD CONSTRAINT `company_ad_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
-  ADD CONSTRAINT `company_ad_ibfk_2` FOREIGN KEY (`billboard_loc`) REFERENCES `billboard_location` (`billboard_location_id`);
+ADD CONSTRAINT `company_ad_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
+ADD CONSTRAINT `company_ad_ibfk_2` FOREIGN KEY (`billboard_loc`) REFERENCES `billboard_location` (`billboard_location_id`);
 
 --
 -- Constraints for table `player`
 --
 ALTER TABLE `player`
-  ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`);
+ADD CONSTRAINT `player_ibfk_1` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`);
 
 --
 -- Constraints for table `player_answered_question`
 --
 ALTER TABLE `player_answered_question`
-  ADD CONSTRAINT `player_answered_question_ibfk_1` FOREIGN KEY (`question`) REFERENCES `question` (`question_id`),
-  ADD CONSTRAINT `player_answered_question_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`);
+ADD CONSTRAINT `player_answered_question_ibfk_1` FOREIGN KEY (`question`) REFERENCES `question` (`question_id`),
+ADD CONSTRAINT `player_answered_question_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`);
 
 --
 -- Constraints for table `question_answer`
 --
 ALTER TABLE `question_answer`
-  ADD CONSTRAINT `question_answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`);
+ADD CONSTRAINT `question_answer_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`);
 
 --
 -- Constraints for table `question_choices`
 --
 ALTER TABLE `question_choices`
-  ADD CONSTRAINT `question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ADD CONSTRAINT `question` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `trivia`
 --
 ALTER TABLE `trivia`
-  ADD CONSTRAINT `trivia_ibfk_1` FOREIGN KEY (`company`) REFERENCES `company` (`company_id`);
+ADD CONSTRAINT `trivia_ibfk_1` FOREIGN KEY (`company`) REFERENCES `company` (`company_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
