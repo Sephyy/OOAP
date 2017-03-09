@@ -47,19 +47,7 @@ if(xsrf_guard())
         {
             $dbh_company_ad->add($arr_form_data);
             $company_ad_id = $dbh_company_ad->auto_id;
-            require_once 'subclasses/question.php';
-            $dbh_company_ad = new question;
-            for($a=0; $a<$question_count;$a++)
-            {
-                
-                $param = array(
-                               'question'=>$cf_question_question[$a],
-                               'points'=>$cf_question_points[$a],
-                               'time_limit'=>$cf_question_time_limit[$a],
-                               'company_ad'=>$company_ad_id
-                              );
-                $dbh_company_ad->add($param);
-            }
+          
 
 
             redirect("listview_company_ad.php?$query_string");
