@@ -29,15 +29,11 @@ if(xsrf_guard())
         log_action('Pressed delete button');
         require_once 'subclasses/company_ad.php';
         $dbh_company_ad = new company_ad;
-
+        
         $object_name = 'dbh_company_ad';
         require 'components/create_form_data.php';
 
-        require_once 'subclasses/question.php';
-        $dbh_question = new question;
-        $dbh_question->delete_many($arr_form_data);
-
-
+        
         $dbh_company_ad->delete($arr_form_data);
 
         redirect("listview_company_ad.php?$query_string");
