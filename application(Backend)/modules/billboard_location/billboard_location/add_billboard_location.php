@@ -33,7 +33,7 @@ if(xsrf_guard())
 
         $message .= $dbh_billboard_location->sanitize($arr_form_data)->lst_error;
         extract($arr_form_data);
-
+        debug($arr_form_data);
         if($dbh_billboard_location->check_uniqueness($arr_form_data)->is_unique)
         {
             //Good, no duplicate in database
