@@ -51,25 +51,7 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            require_once 'subclasses/question.php';
-            $dbh_question = new question;
-            $dbh_question->delete_many($arr_form_data);
-
-            for($a=0; $a<$question_count;$a++)
-            {
-                
-                $param = array(
-                               'question'=>$cf_question_question[$a],
-                               'points'=>$cf_question_points[$a],
-                               'time_limit'=>$cf_question_time_limit[$a],
-                               'company_ad'=>$company_ad_id
-                              );
-                $dbh_question->add($param);
-            }
-
-
             $dbh_company_ad->edit($arr_form_data);
-
             redirect("listview_company_ad.php?$query_string");
         }
     }

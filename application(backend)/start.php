@@ -12,7 +12,7 @@ if(ENABLE_SIDEBAR)
     <meta http-equiv="content-type" content="text/html; charset=<?php echo MULTI_BYTE_ENCODING; ?>" />
 </head>
 <frameset rows="120,*" frameborder="1">
-    <frame src="header.php" name="header_frame" frameborder="0">
+    <frame src="header.php" name="header_frame" frameborder="1">
     <frameset cols="200,*" frameborder="1">
         <frame frameborder="1" src="menus.php" name="menu_frame">
         <frame frameborder="1" src="main.php" name="content_frame">
