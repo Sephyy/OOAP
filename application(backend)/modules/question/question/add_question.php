@@ -60,6 +60,24 @@ require 'subclasses/question_html.php';
 $html = new question_html;
 $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
+
+//Fix-me: this should be "type" instead of "answer"
+if(isset($answer) && $answer == 'Multiple Choice')
+{
+/*    
+    $html->relations[]  = array('type'=>'1-M',
+                                'table'=>'question_choices',
+                                'link_parent'=>'question_id',
+                                'link_child'=>'question_id',
+                                'where_clause'=>'');                             
+*/
+}
+else
+{
+    unset($html->relations[2]);
+}
+
+
 $html->draw_controls('add');
 
 $html->draw_footer();

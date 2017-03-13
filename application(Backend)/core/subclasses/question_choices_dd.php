@@ -71,7 +71,7 @@ class question_choices_dd
                                           'required'=>TRUE,
                                           'attribute'=>'',
                                           'control_type'=>'textbox',
-                                          'size'=>'60',
+                                          'size'=>'13',
                                           'drop_down_has_blank'=>TRUE,
                                           'label'=>'Choice Number',
                                           'extra'=>'',

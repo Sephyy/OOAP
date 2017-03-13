@@ -100,7 +100,7 @@ class question_dd
                                           'size'=>'60',
                                           'drop_down_has_blank'=>TRUE,
                                           'label'=>'Type',
-                                          'extra'=>'',
+                                          'extra'=>'onChange="this.form.submit()"',
                                           'companion'=>'',
                                           'in_listview'=>TRUE,
                                           'char_set_method'=>'',
@@ -193,7 +193,13 @@ class question_dd
                              'link_parent'=>'company_ad_id',
                              'link_child'=>'company_ad',
                              'minimum'=>1,
-                             'where_clause'=>''));
+                             'where_clause'=>''),
+                            array('type'=>'1-M',
+                                'table'=>'question_choices',
+                                'link_parent'=>'question_id',
+                                'link_child'=>'question_id',
+                                'where_clause'=>'')                                 
+                             );
 
         return $relations;
     }
