@@ -47,7 +47,7 @@ if(xsrf_guard())
         {
             $dbh_company_ad->add($arr_form_data);
             $company_ad_id = $dbh_company_ad->auto_id;
-            
+
 
 
             redirect("listview_company_ad.php?$query_string");

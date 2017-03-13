@@ -92,7 +92,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <div id="markerStatus"><i>Click and drag the marker.</i></div>
     <b>Current position:</b>
     <div id="info"></div>
-   
   </div>
 </body>
 </html>
