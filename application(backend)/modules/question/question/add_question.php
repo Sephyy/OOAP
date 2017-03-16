@@ -47,7 +47,7 @@ if(xsrf_guard())
         {
             $dbh_question->add($arr_form_data);
             $question_id = $dbh_question->auto_id;
-           
+              
 
             
 
@@ -62,20 +62,28 @@ $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 
 //Fix-me: this should be "type" instead of "answer"
-if(isset($answer) && $answer == 'Multiple Choice')
+if(isset($answer) && $answer == 'Identification')
 {
-/*    
+    $html->relations[]  = array('type'=>'1-M',
+                                    'table'=>'question_answer',
+                                    'link_parent'=>'question_id',
+                                    'link_child'=>'question_id',
+                                    'where_clause'=>'');
+           unset($html->relations[3]);                 
+
+}
+else
+{
     $html->relations[]  = array('type'=>'1-M',
                                 'table'=>'question_choices',
                                 'link_parent'=>'question_id',
                                 'link_child'=>'question_id',
-                                'where_clause'=>'');                             
-*/
+                                'where_clause'=>'');  
+
+                      
+    unset($html->relations[4]);
 }
-else
-{
-    unset($html->relations[2]);
-}
+
 
 
 $html->draw_controls('add');

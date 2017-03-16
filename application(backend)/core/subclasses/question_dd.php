@@ -98,7 +98,7 @@ class question_dd
                                           'attribute'=>'none',
                                           'control_type'=>'radio buttons',
                                           'size'=>'60',
-                                          'drop_down_has_blank'=>TRUE,
+                                          'drop_down_has_blank'=>FALSE,
                                           'label'=>'Type',
                                           'extra'=>'onChange="this.form.submit()"',
                                           'companion'=>'',
@@ -187,19 +187,16 @@ class question_dd
                                  'link_child'=>'company_ad',
                                  'link_subtext'=>array('advertisement_name'),
                                  'where_clause'=>''),
-                           array('type'=>'M-1',
-                             'table'=>'company_ad',
-                             'alias'=>'company_ad',
-                             'link_parent'=>'company_ad_id',
-                             'link_child'=>'company_ad',
-                             'minimum'=>1,
-                             'where_clause'=>''),
-                            array('type'=>'1-M',
-                                'table'=>'question_choices',
-                                'link_parent'=>'question_id',
-                                'link_child'=>'question_id',
-                                'where_clause'=>'')                                 
-                             );
+                            array('type'=>'M-1',
+                                'table'=>'company_ad',
+                                'alias'=>'company_ad',
+                                'link_parent'=>'company_ad_id',
+                                'link_child'=>'company_ad',
+                                'minimum'=>1,
+                                'where_clause'=>''),    
+ 
+                                                                  
+                                );
 
         return $relations;
     }
