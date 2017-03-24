@@ -47,7 +47,7 @@ class trivia_dd
                                           'extra'=>'',
                                           'companion'=>'',
                                           'in_listview'=>TRUE,
-                                          'char_set_method'=>'',
+                                          'char_set_method'=>'generate_alphanum_set',
                                           'char_set_allow_space'=>TRUE,
                                           'extra_chars_allowed'=>'',
                                           'allow_html_tags'=>FALSE,
