@@ -11,20 +11,6 @@ if($result = $dbh_question->make_query()->result)
 
 }
 
-require_once 'subclasses/question_answer.php';
-$dbh_question_answer = new question_answer;
-$dbh_question_answer->set_fields('answer');
-$dbh_question_answer->set_where("question_id='" . quote_smart($question_id) . "'");
-if($result = $dbh_question_answer->make_query()->result)
-{
-    $num_question_answer = $dbh_question_answer->num_rows;
-    for($a=0; $a<$num_question_answer; $a++)
-    {
-        $data = $result->fetch_row();
-        $cf_question_answer_answer[$a] = $data[0];
-    }
-}
-
 require_once 'subclasses/question_choices.php';
 $dbh_question_choices = new question_choices;
 $dbh_question_choices->set_fields('choice_number, choice, is_correct');

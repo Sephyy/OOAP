@@ -33,10 +33,6 @@ if(xsrf_guard())
         $object_name = 'dbh_question';
         require 'components/create_form_data.php';
 
-        require_once 'subclasses/question_answer.php';
-        $dbh_question_answer = new question_answer;
-        $dbh_question_answer->delete_many($arr_form_data);
-
         require_once 'subclasses/question_choices.php';
         $dbh_question_choices = new question_choices;
         $dbh_question_choices->delete_many($arr_form_data);

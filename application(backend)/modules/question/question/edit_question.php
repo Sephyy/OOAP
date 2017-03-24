@@ -51,11 +51,21 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            require_once 'subclasses/question_answer.php';
-            $dbh_question_answer = new question_answer;
-            $dbh_question_answer->delete_many($arr_form_data);
+            require_once 'subclasses/question_choices.php';
+            $dbh_question_choices = new question_choices;
+            $dbh_question_choices->delete_many($arr_form_data);
 
-            
+            for($a=0; $a<$question_choices_count;$a++)
+            {
+                
+                $param = array(
+                               'question_id'=>$question_id,
+                               'choice_number'=>$cf_question_choices_choice_number[$a],
+                               'choice'=>$cf_question_choices_choice[$a],
+                               'is_correct'=>$cf_question_choices_is_correct[$a]
+                              );
+                $dbh_question_choices->add($param);
+            }
 
 
             $dbh_question->edit($arr_form_data);

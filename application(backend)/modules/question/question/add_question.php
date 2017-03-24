@@ -47,9 +47,19 @@ if(xsrf_guard())
         {
             $dbh_question->add($arr_form_data);
             $question_id = $dbh_question->auto_id;
-              
-
-            
+            require_once 'subclasses/question_choices.php';
+            $dbh_question = new question_choices;
+            for($a=0; $a<$question_choices_count;$a++)
+            {
+                
+                $param = array(
+                               'question_id'=>$question_id,
+                               'choice_number'=>$cf_question_choices_choice_number[$a],
+                               'choice'=>$cf_question_choices_choice[$a],
+                               'is_correct'=>$cf_question_choices_is_correct[$a]
+                              );
+                $dbh_question->add($param);
+            }
 
 
             redirect("listview_question.php?$query_string");
@@ -60,32 +70,6 @@ require 'subclasses/question_html.php';
 $html = new question_html;
 $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
-
-//Fix-me: this should be "type" instead of "answer"
-if(isset($answer) && $answer == 'Identification')
-{
-    $html->relations[]  = array('type'=>'1-M',
-                                    'table'=>'question_answer',
-                                    'link_parent'=>'question_id',
-                                    'link_child'=>'question_id',
-                                    'where_clause'=>'');
-           unset($html->relations[3]);                 
-
-}
-else
-{
-    $html->relations[]  = array('type'=>'1-M',
-                                'table'=>'question_choices',
-                                'link_parent'=>'question_id',
-                                'link_child'=>'question_id',
-                                'where_clause'=>'');  
-
-                      
-    unset($html->relations[4]);
-}
-
-
-
 $html->draw_controls('add');
 
 $html->draw_footer();
