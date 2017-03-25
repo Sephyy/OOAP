@@ -62,6 +62,7 @@ $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from,
 //$html->draw_controls('add');
 
 //***********************************************
+
 $html->draw_container_div_start();
 $html->draw_fieldset_header('Customized Form w/ GMaps');
 $html->draw_fieldset_body_start();
@@ -73,6 +74,8 @@ $html->draw_field('postal_code');
 $html->draw_field('latitude');
 $html->draw_field('longitude');
 require 'thirdparty/googleMaps/samp.php';
+
+
 echo '<tr><td colspan="2">';
 
 echo '</td></tr>';
