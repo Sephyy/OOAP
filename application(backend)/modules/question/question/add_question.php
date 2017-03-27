@@ -60,6 +60,17 @@ if(xsrf_guard())
                               );
                 $dbh_question->add($param);
             }
+            require_once 'subclasses/question_answer.php';
+            $dbh_question = new question_answer;
+            for($a=0; $a<$question_answer_count;$a++)
+            {
+                
+                $param = array(
+                               'question_id'=>$question_id,
+                               'answer'=>$cf_question_answer_answer[$a]
+                              );
+                $dbh_question->add($param);
+            }
 
 
             redirect("listview_question.php?$query_string");
@@ -70,6 +81,19 @@ require 'subclasses/question_html.php';
 $html = new question_html;
 $html->draw_header('Add %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
+
+
+IF (isset($answer)&& $answer=='Multiple Choice')
+{
+unset($html->relations[1]);
+}
+else
+{
+    unset($html->relations[0]);
+    isset($html->relations[1]);
+}
+
+
 $html->draw_controls('add');
 
 $html->draw_footer();
