@@ -25,7 +25,8 @@ if(xsrf_guard())
     require 'components/create_form_data.php';
 
     extract($arr_form_data);
-
+	
+	
     if($_POST['btn_cancel'])
     {
         log_action('Pressed cancel button');
@@ -58,6 +59,7 @@ if(xsrf_guard())
         }
     }
 }
+
 require 'subclasses/player_answered_question_html.php';
 $html = new player_answered_question_html;
 $html->draw_header('Edit %%', $message, $message_type);

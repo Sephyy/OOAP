@@ -7,11 +7,13 @@ require 'path.php';
 init_cobalt('Add advertiser');
 
 require 'components/get_listview_referrer.php';
-
+$show_modal = FALSE;
 if(xsrf_guard())
 {
-    init_var($_POST['btn_cancel']);
+   init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+	init_var($_POST['btn_cancel2']);	
+    init_var($_POST['btn_submit2']);
     require 'components/query_string_standard.php';
     require 'subclasses/advertiser.php';
     $dbh_advertiser = new advertiser;
@@ -45,16 +47,34 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $dbh_advertiser->add($arr_form_data);
-            
-
-            redirect("listview_advertiser.php?$query_string");
+			$show_modal = TRUE;
+           // $dbh_advertiser->add($arr_form_data);
+           // redirect("listview_advertiser.php?$query_string");
         }
     }
+	if($_POST['btn_submit2'])
+	{
+		$arr_form_data['question'] = $_POST['question'];
+		debug($arr_form_data);
+		 $dbh_advertiser->add($arr_form_data);
+		 
+         redirect("listview_advertiser.php?$query_string");
+	}
+	
+	if($_POST['btn_cancel2'])
+	{
+		$show_modal = FALSE;
+	}
 }
 require 'subclasses/advertiser_html.php';
 $html = new advertiser_html;
+
+$modal_message = "Are you sure you want to continue?";
 $html->draw_header('Add %%', $message, $message_type);
+if($show_modal)
+{
+	$html->draw_container_div_start_modal($modal_message);
+}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_controls('add');
 

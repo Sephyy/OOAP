@@ -8,6 +8,7 @@ if($result = $dbh_player_answered_question->make_query()->result)
 {
     $data = $result->fetch_assoc();
     extract($data);
+	debug($data);
 
 }
 

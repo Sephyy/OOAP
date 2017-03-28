@@ -22,10 +22,12 @@ function updateMarkerStatus(str) {
 }
 
 function updateMarkerPosition(latLng) {
-  document.getElementById('info').innerHTML = [
+  document.getElementById('latitude').value = [
     latLng.lat(),
-    latLng.lng()
-  ].join(', ');
+  ];
+  document.getElementById('longitude').value = [
+    latLng.lng(),
+  ];
 }
 
 function updateMarkerAddress(str) {
