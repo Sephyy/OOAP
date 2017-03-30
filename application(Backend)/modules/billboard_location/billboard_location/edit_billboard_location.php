@@ -64,6 +64,32 @@ $html->draw_header('Edit %%', $message, $message_type);
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_hidden('billboard_location_id');
 
-$html->draw_controls('edit');
+//$html->draw_controls('edit');
+
+$html->draw_container_div_start();
+$html->draw_fieldset_header('Billboard Location Assigner');
+$html->draw_fieldset_body_start();
+echo '<table class="input_form">';
+
+
+$html->draw_field('address');
+$html->draw_field('postal_code');
+$html->draw_field('latitude');
+$html->draw_field('longitude');
+require 'thirdparty/googleMaps/samp.php';
+
+
+echo '<tr><td colspan="2">';
+
+echo '</td></tr>';
+
+
+echo '</table>';
+$html->autofocus('position_title');
+$html->draw_fieldset_body_end();
+$html->draw_fieldset_footer_start();
+$html->draw_submit_cancel(FALSE);
+
+
 
 $html->draw_footer();
