@@ -12,7 +12,7 @@ if(isset($_GET['advertiser_id']))
     require 'form_data_advertiser.php';
 
 }
-	$show_modals = FALSE;
+	$show_modal = FALSE;
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
@@ -74,7 +74,7 @@ require 'subclasses/advertiser_html.php';
 $html = new advertiser_html;
 $modal_message ="Are you sure you want to continue?";
 $html->draw_header('Edit %%', $message, $message_type);
-	if($show_modals)
+	if($show_modal)
 	{
 		$html->draw_container_div_start_modal($modal_message);
 	}

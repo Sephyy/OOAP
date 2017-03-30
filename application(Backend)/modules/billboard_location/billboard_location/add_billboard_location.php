@@ -7,11 +7,13 @@ require 'path.php';
 init_cobalt('Add billboard location');
 
 require 'components/get_listview_referrer.php';
-
+$show_modal = FALSE;
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+	init_var($_POST['btn_cancel2']);
+    init_var($_POST['btn_submit2']);
     require 'components/query_string_standard.php';
     require 'subclasses/billboard_location.php';
     $dbh_billboard_location = new billboard_location;
@@ -33,7 +35,7 @@ if(xsrf_guard())
 
         $message .= $dbh_billboard_location->sanitize($arr_form_data)->lst_error;
         extract($arr_form_data);
-        debug($arr_form_data);
+        //debug($arr_form_data);
         if($dbh_billboard_location->check_uniqueness($arr_form_data)->is_unique)
         {
             //Good, no duplicate in database
@@ -45,18 +47,33 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $dbh_billboard_location->add($arr_form_data);
-            $billboard_location_id = $dbh_billboard_location->auto_id;
-           
-
-
-            redirect("listview_billboard_location.php?$query_string");
+            $show_modal = TRUE;
+            //$billboard_location_id = $dbh_billboard_location->auto_id;
+            
         }
     }
+	if($_POST['btn_submit2'])
+	{
+	
+		//debug($arr_form_data);
+		$dbh_billboard_location->add($arr_form_data);
+		 
+         redirect("listview_billboard_location.php?$query_string");
+	}
+	
+	if($_POST['btn_cancel2'])
+	{
+		$show_modal = FALSE;
+	}
 }
 require 'subclasses/billboard_location_html.php';
 $html = new billboard_location_html;
+$modal_message ="Are you sure you want to continue?";
 $html->draw_header('Add %%', $message, $message_type);
+if($show_modal)
+{
+	$html->draw_container_div_start_modal($modal_message);
+}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 
 //$html->draw_controls('add');
