@@ -85,8 +85,14 @@ $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from,
 $html->draw_hidden('billboard_location_id');
 
 //$html->draw_controls('edit');
+<<<<<<< HEAD
 $html->draw_container_div_start();
 $html->draw_fieldset_header('Customized Form w/ GMaps');
+=======
+
+$html->draw_container_div_start();
+$html->draw_fieldset_header('Billboard Location Assigner');
+>>>>>>> 63f056e43ad55a53e279c4f2f5f4c57ff4ec161c
 $html->draw_fieldset_body_start();
 echo '<table class="input_form">';
 
@@ -108,5 +114,10 @@ $html->autofocus('position_title');
 $html->draw_fieldset_body_end();
 $html->draw_fieldset_footer_start();
 $html->draw_submit_cancel(FALSE);
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 63f056e43ad55a53e279c4f2f5f4c57ff4ec161c
 
 $html->draw_footer();

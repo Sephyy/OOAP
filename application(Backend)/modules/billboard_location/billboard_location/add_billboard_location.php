@@ -64,7 +64,7 @@ $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from,
 //***********************************************
 
 $html->draw_container_div_start();
-$html->draw_fieldset_header('Customized Form w/ GMaps');
+$html->draw_fieldset_header('Billboard Location Assigner');
 $html->draw_fieldset_body_start();
 echo '<table class="input_form">';
 
