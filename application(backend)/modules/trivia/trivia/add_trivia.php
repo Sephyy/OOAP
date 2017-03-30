@@ -6,12 +6,15 @@
 require 'path.php';
 init_cobalt('Add trivia');
 
+$show_modal = FALSE;
 require 'components/get_listview_referrer.php';
 
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+    init_var($_POST['btn_cancel2']);
+    init_var($_POST['btn_submit2']);
     require 'components/query_string_standard.php';
     require 'subclasses/trivia.php';
     $dbh_trivia = new trivia;
@@ -45,16 +48,31 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $dbh_trivia->add($arr_form_data);
+            $show_modal = TRUE;
             
-
-            redirect("listview_trivia.php?$query_string");
         }
     }
+    if($_POST['btn_submit2'])
+	{
+		
+		//debug($arr_form_data);
+		$dbh_trivia->add($arr_form_data);
+        redirect("listview_trivia.php?$query_string");
+	}
+	
+	if($_POST['btn_cancel2'])
+	{
+		$show_modal = FALSE;
+	}
 }
 require 'subclasses/trivia_html.php';
 $html = new trivia_html;
+$modal_message ="Are you sure you want to continue?";
 $html->draw_header('Add %%', $message, $message_type);
+if($show_modal)
+{
+	$html->draw_container_div_start_modal($modal_message);
+}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_controls('add');
 

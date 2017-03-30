@@ -54,8 +54,8 @@ if(xsrf_guard())
     }
 	if($_POST['btn_submit2'])
 	{
-		$arr_form_data['question'] = $_POST['question'];
-		debug($arr_form_data);
+		//$arr_form_data['question'] = $_POST['question'];
+		//debug($arr_form_data);
 		 $dbh_advertiser->add($arr_form_data);
 		 
          redirect("listview_advertiser.php?$query_string");

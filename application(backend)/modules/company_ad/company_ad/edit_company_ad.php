@@ -6,6 +6,7 @@
 require 'path.php';
 init_cobalt('Edit company ad');
 
+$show_modal = FALSE;
 if(isset($_GET['company_ad_id']))
 {
     $company_ad_id = urldecode($_GET['company_ad_id']);
@@ -17,6 +18,8 @@ if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+    init_var($_POST['btn_cancel2']);
+    init_var($_POST['btn_submit2']);
     require 'components/query_string_standard.php';
     require 'subclasses/company_ad.php';
     $dbh_company_ad = new company_ad;
@@ -51,14 +54,32 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $dbh_company_ad->edit($arr_form_data);
-            redirect("listview_company_ad.php?$query_string");
+            $show_modal = TRUE;
+            
+            
         }
     }
+     if($_POST['btn_submit2'])
+	{
+		
+		//debug($arr_form_data);
+		 $dbh_company_ad->edit($arr_form_data);
+         redirect("listview_company_ad.php?$query_string");
+	}
+	
+	if($_POST['btn_cancel2'])
+	{
+		$show_modal = FALSE;
+	}
 }
 require 'subclasses/company_ad_html.php';
 $html = new company_ad_html;
+$modal_message = "Are you sure you want to continue?";
 $html->draw_header('Edit %%', $message, $message_type);
+if($show_modal)
+{
+	$html->draw_container_div_start_modal($modal_message);
+}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_hidden('company_ad_id');
 
