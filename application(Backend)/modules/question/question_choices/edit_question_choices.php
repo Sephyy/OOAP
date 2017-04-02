@@ -6,6 +6,7 @@
 require 'path.php';
 init_cobalt('Edit question choices');
 
+$show_modal = FALSE;
 if(isset($_GET['question_choices_id']))
 {
     $question_choices_id = urldecode($_GET['question_choices_id']);
@@ -17,6 +18,8 @@ if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+	init_var($_POST['btn_cancel2']);
+    init_var($_POST['btn_submit2']);
     require 'components/query_string_standard.php';
     require 'subclasses/question_choices.php';
     $dbh_question_choices = new question_choices;
@@ -51,16 +54,34 @@ if(xsrf_guard())
 
         if($message=="")
         {
+			$show_modal = TRUE;
 
-            $dbh_question_choices->edit($arr_form_data);
+           
 
-            redirect("listview_question_choices.php?$query_string");
+          
         }
     }
+	if($_POST['btn_submit2'])
+	{
+		
+		//debug($arr_form_data);
+		 $dbh_question_choices->edit($arr_form_data);
+         redirect("listview_question_choices.php?$query_string");
+	}
+	
+	if($_POST['btn_cancel2'])
+	{
+		$show_modal = FALSE;
+	}
 }
 require 'subclasses/question_choices_html.php';
 $html = new question_choices_html;
+$modal_message = "Are you sure you want to continue?";
 $html->draw_header('Edit %%', $message, $message_type);
+if($show_modal)
+{
+	$html->draw_container_div_start_modal($modal_message);
+}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 $html->draw_hidden('question_choices_id');
 
