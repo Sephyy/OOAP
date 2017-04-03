@@ -86,9 +86,6 @@ $html->draw_hidden('billboard_location_id');
 
 //$html->draw_controls('edit');
 $html->draw_container_div_start();
-$html->draw_fieldset_header('Customized Form w/ GMaps');
-
-$html->draw_container_div_start();
 $html->draw_fieldset_header('Billboard Location Assigner');
 $html->draw_fieldset_body_start();
 echo '<table class="input_form">';

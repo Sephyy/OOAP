@@ -8,12 +8,14 @@ init_cobalt('Add billboard location');
 
 require 'components/get_listview_referrer.php';
 $show_modal = FALSE;
+$include_address = TRUE;
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
 	init_var($_POST['btn_cancel2']);
     init_var($_POST['btn_submit2']);
+
     require 'components/query_string_standard.php';
     require 'subclasses/billboard_location.php';
     $dbh_billboard_location = new billboard_location;
@@ -32,7 +34,7 @@ if(xsrf_guard())
     if($_POST['btn_submit'])
     {
         log_action('Pressed submit button');
-
+            $include_address = FALSE;
         $message .= $dbh_billboard_location->sanitize($arr_form_data)->lst_error;
         extract($arr_form_data);
         //debug($arr_form_data);
@@ -54,8 +56,9 @@ if(xsrf_guard())
     }
 	if($_POST['btn_submit2'])
 	{
-	
+        // brpt();
 		//debug($arr_form_data);
+        $arr_form_data['address'] = $_POST['address_passer'];
 		$dbh_billboard_location->add($arr_form_data);
 		 
          redirect("listview_billboard_location.php?$query_string");
@@ -68,6 +71,7 @@ if(xsrf_guard())
 }
 require 'subclasses/billboard_location_html.php';
 $html = new billboard_location_html;
+init_var($_POST['address']);
 $modal_message ="Are you sure you want to continue?";
 $html->draw_header('Add %%', $message, $message_type);
 if($show_modal)
@@ -80,13 +84,17 @@ $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from,
 
 //***********************************************
 
+
 $html->draw_container_div_start();
 $html->draw_fieldset_header('Billboard Location Assigner');
 $html->draw_fieldset_body_start();
 echo '<table class="input_form">';
 
-
+echo '<input type="hidden" name="address_passer" value="'.$_POST['address'].'">';
+if($include_address)
+{
 $html->draw_field('address');
+}
 $html->draw_field('postal_code');
 $html->draw_field('latitude');
 $html->draw_field('longitude');

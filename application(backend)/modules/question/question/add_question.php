@@ -12,6 +12,8 @@ if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
+    init_var($_POST['question_type']);
+	
     require 'components/query_string_standard.php';
     require 'subclasses/question.php';
     $dbh_question = new question;
@@ -49,7 +51,12 @@ if(xsrf_guard())
             $question_id = $dbh_question->auto_id;
             require_once 'subclasses/question_choices.php';
             $dbh_question = new question_choices;
-            for($a=0; $a<$question_choices_count;$a++)
+
+            // debug($_POST);
+            if($_POST['answer']=='Multiple Choice')
+            {
+                // brpt();
+                   for($a=0; $a<$question_choices_count;$a++)
             {
                 
                 $param = array(
@@ -60,6 +67,12 @@ if(xsrf_guard())
                               );
                 $dbh_question->add($param);
             }
+
+
+            } else 
+
+            {
+                //brpt();
             require_once 'subclasses/question_answer.php';
             $dbh_question = new question_answer;
             for($a=0; $a<$question_answer_count;$a++)
@@ -72,7 +85,9 @@ if(xsrf_guard())
                 $dbh_question->add($param);
             }
 
+            }
 
+            // die();
             redirect("listview_question.php?$query_string");
         }
     }

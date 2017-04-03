@@ -112,7 +112,7 @@ class player_answered_question_dd
                                  'alias'=>'',
                                  'link_parent'=>'player_id',
                                  'link_child'=>'player_id',
-                                 'link_subtext'=>array('person_id'),
+                                 'link_subtext'=>array('player_id'),
                                  'where_clause'=>''),
                            array('type'=>'M-1',
                              'table'=>'player',

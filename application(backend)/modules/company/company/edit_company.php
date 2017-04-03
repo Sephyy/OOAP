@@ -20,6 +20,9 @@ if(xsrf_guard())
     init_var($_POST['btn_submit']);
     init_var($_POST['btn_cancel2']);
     init_var($_POST['btn_submit2']);
+    init_var($_POST['trivia_count']);
+    init_var($_POST['company_ad_count']);
+    init_var($_POST['advertiser_count']);
     require 'components/query_string_standard.php';
     require 'subclasses/company.php';
     $dbh_company = new company;
@@ -58,7 +61,7 @@ if(xsrf_guard())
             $dbh_trivia = new trivia;
             $dbh_trivia->delete_many($arr_form_data);
 
-            for($a=0; $a<$trivia_count;$a++)
+            /**for($a=0; $a<$trivia_count;$a++)
             {
                 
                 $param = array(
@@ -101,7 +104,7 @@ if(xsrf_guard())
                                'email'=>$cf_advertiser_email[$a]
                               );
                 $dbh_advertiser->add($param);
-            }
+            }*/
 
             $show_modal = TRUE;
             
