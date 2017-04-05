@@ -30,8 +30,7 @@ $report_page      = 'reporter_player_answered_question.php';
 $operations_extra = '';
 
 //Formatting and alignment options for data columns
-require_once 'components/get_player_name.php';
-$arr_formatting   = array(2=>'get_name');
+$arr_formatting   = array();
 $arr_alignment    = array();
 
 //For custom join & select clause, you need to set the following variables so that the default

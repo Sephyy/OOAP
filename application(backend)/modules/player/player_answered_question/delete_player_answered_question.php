@@ -35,6 +35,7 @@ if(xsrf_guard())
 
 
         $dbh_player_answered_question->delete($arr_form_data);
+
         redirect("listview_player_answered_question.php?$query_string");
     }
 }

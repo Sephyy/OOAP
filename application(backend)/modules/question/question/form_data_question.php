@@ -37,7 +37,7 @@ if($result = $dbh_question_choices->make_query()->result)
     for($a=0; $a<$num_question_choices; $a++)
     {
         $data = $result->fetch_row();
-        debug($data);
+       
         $cf_question_choices_choice_number[$a] = $data[0];
         $cf_question_choices_choice[$a] = $data[1];
         $cf_question_choices_is_correct[$a] = $data[2];
