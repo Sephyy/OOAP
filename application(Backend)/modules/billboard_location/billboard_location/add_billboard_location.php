@@ -7,14 +7,14 @@ require 'path.php';
 init_cobalt('Add billboard location');
 
 require 'components/get_listview_referrer.php';
-$show_modal = FALSE;
-$include_address = TRUE;
+//$show_modal = FALSE;
+//$include_address = TRUE;
 if(xsrf_guard())
 {
     init_var($_POST['btn_cancel']);
     init_var($_POST['btn_submit']);
-	init_var($_POST['btn_cancel2']);
-    init_var($_POST['btn_submit2']);
+	//init_var($_POST['btn_cancel2']);
+    //init_var($_POST['btn_submit2']);
 
     require 'components/query_string_standard.php';
     require 'subclasses/billboard_location.php';
@@ -49,35 +49,37 @@ if(xsrf_guard())
 
         if($message=="")
         {
-            $show_modal = TRUE;
+            //$show_modal = TRUE;
             //$billboard_location_id = $dbh_billboard_location->auto_id;
+			$dbh_billboard_location->add($arr_form_data);
+			 redirect("listview_billboard_location.php?$query_string");
             
         }
     }
-	if($_POST['btn_submit2'])
-	{
+	//if($_POST['btn_submit2'])
+	//{
         // brpt();
 		//debug($arr_form_data);
-        $arr_form_data['address'] = $_POST['address_passer'];
-		$dbh_billboard_location->add($arr_form_data);
+        //$arr_form_data['address'] = $_POST['address_passer'];
+		
 		 
-         redirect("listview_billboard_location.php?$query_string");
-	}
+        
+	//}
 	
-	if($_POST['btn_cancel2'])
-	{
-		$show_modal = FALSE;
-	}
+	//if($_POST['btn_cancel2'])
+	//{
+	//	$show_modal = FALSE;
+	//}
 }
 require 'subclasses/billboard_location_html.php';
 $html = new billboard_location_html;
 init_var($_POST['address']);
-$modal_message ="Are you sure you want to continue?";
+//$modal_message ="Are you sure you want to continue?";
 $html->draw_header('Add %%', $message, $message_type);
-if($show_modal)
-{
-	$html->draw_container_div_start_modal($modal_message);
-}
+//if($show_modal)
+//{
+//	$html->draw_container_div_start_modal($modal_message);
+//}
 $html->draw_listview_referrer_info($filter_field_used, $filter_used, $page_from, $filter_sort_asc, $filter_sort_desc);
 
 //$html->draw_controls('add');
@@ -90,11 +92,11 @@ $html->draw_fieldset_header('Billboard Location Assigner');
 $html->draw_fieldset_body_start();
 echo '<table class="input_form">';
 
-echo '<input type="hidden" name="address_passer" value="'.$_POST['address'].'">';
-if($include_address)
-{
+//echo '<input type="hidden" name="address_passer" value="'.$_POST['address'].'">';
+//if($include_address)
+//{
 $html->draw_field('address');
-}
+//}
 $html->draw_field('postal_code');
 $html->draw_field('latitude');
 $html->draw_field('longitude');
