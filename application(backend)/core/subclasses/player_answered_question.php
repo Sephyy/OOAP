@@ -21,14 +21,15 @@ class player_answered_question extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('player_answered_question_id, question, player_id, points_attained');
-            $this->set_values("?,?,?,?");
+            $this->set_fields('player_answered_question_id, question, player_id, points_attained, time_answered');
+            $this->set_values("?,?,?,?,?");
 
-            $bind_params = array('iiis',
+            $bind_params = array('iiiss',
                                  &$this->fields['player_answered_question_id']['value'],
                                  &$this->fields['question']['value'],
                                  &$this->fields['player_id']['value'],
-                                 &$this->fields['points_attained']['value']);
+                                 &$this->fields['points_attained']['value'],
+                                 &$this->fields['time_answered']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -44,13 +45,14 @@ class player_answered_question extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("question = ?, player_id = ?, points_attained = ?");
+            $this->set_update("question = ?, player_id = ?, points_attained = ?, time_answered = ?");
             $this->set_where("player_answered_question_id = ?");
 
-            $bind_params = array('iisi',
+            $bind_params = array('iissi',
                                  &$this->fields['question']['value'],
                                  &$this->fields['player_id']['value'],
                                  &$this->fields['points_attained']['value'],
+                                 &$this->fields['time_answered']['value'],
                                  &$this->fields['player_answered_question_id']['value']);
 
             $this->stmt_prepare($bind_params);
@@ -80,10 +82,10 @@ class player_answered_question extends data_abstraction
     {
         $this->set_parameters($param);
         $this->set_query_type('DELETE');
-        $this->set_where("question = ?");
+        $this->set_where("");
 
-        $bind_params = array('i',
-                             &$this->fields['question']['value']);
+        $bind_params = array('',
+                             );
 
         $this->stmt_prepare($bind_params);
         $this->stmt_execute();
