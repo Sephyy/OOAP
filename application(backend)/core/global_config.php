@@ -1,5 +1,5 @@
 <?php
-define('GLOBAL_PROJECT_NAME', 'Mobile Application (OAAP)');
+define('GLOBAL_PROJECT_NAME', 'Interactive Billboard On-site Locator (iBOL)');
 define('GLOBAL_SESSION_NAME', 'Cf2023342');
 
 //Default database settings
@@ -9,7 +9,7 @@ define('DEFAULT_DB_PASS','');
 define('DEFAULT_DB_USE' ,'billboard');
 
 //Paths and directory names
-define('BASE_DIRECTORY', 'ooap');
+define('BASE_DIRECTORY', 'ibol');
 define('FULLPATH_CORE', dirname(__FILE__) . "/");
 define('GRAPH_CREATOR_FONTDIR', FULLPATH_CORE . 'fonts/');
 define('LOGIN_PAGE', '/' . BASE_DIRECTORY . '/login.php');
