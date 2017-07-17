@@ -97,7 +97,7 @@ echo '<table class="input_form">';
 //{
 $html->draw_field('address');
 //}
-$html->draw_field('postal_code');
+
 $html->draw_field('latitude');
 $html->draw_field('longitude');
 require 'thirdparty/googleMaps/samp.php';

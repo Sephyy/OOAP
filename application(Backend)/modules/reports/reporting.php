@@ -169,7 +169,7 @@ if($show)
 $html->draw_fieldset_body_start();
 //debug($arr_result);
 echo '<table border = 1>';
-echo '<tr><td>Question</td><td>Advertisement Name</td><td>Count</td></tr>';
+echo '<tr><td>Question</td><td>Advertisement Name</td><td>Number of Person Answered</td></tr>';
 
 
 	
@@ -184,7 +184,10 @@ $html->draw_fieldset_body_end();
 $html->draw_fieldset_footer_start();
 
 $html->draw_fieldset_footer_end();
+} else{
+	$html->display_info("No value retrieved");
 }
+
 }
 
 
