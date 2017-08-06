@@ -29,6 +29,7 @@ if(xsrf_guard())
         log_action('Pressed cancel button');
         redirect("listview_billboard_location.php?$query_string");
     }
+    
 
 
     if($_POST['btn_submit'])
@@ -100,12 +101,37 @@ $html->draw_field('address');
 
 $html->draw_field('latitude');
 $html->draw_field('longitude');
+$html->draw_field('site_photo_day1');
+$html->draw_field('site_photo_day2');
+$html->draw_field('site_photo_night');
+$html->draw_field('size');
+$html->draw_field('material');
+$html->draw_field('no_of_faces');
+$html->draw_field('no_of_lights');
+$html->draw_field('visibility_range');
+$html->draw_field('readability_range');
+$html->draw_field('traffic_count');
+$html->draw_field('viewership');
+$html->draw_field('site_supplier');
+$html->draw_field('sign_permit_no');
+$html->draw_field('sign_permit_date_issue');
+$html->draw_field('sign_permit_date_expired');
+$html->draw_field('brgy_clear');
+$html->draw_field('brgy_clear_date_issuse');
+$html->draw_field('brgy_clear_date_expire');
+$html->draw_field('mmda_clear_no');
+$html->draw_field('mmda_clear_date_issue');
+$html->draw_field('mmda_clear_date_expire');
+$html->draw_field('cost_per_month');
+$html->draw_field('accredit_organization');
+
+
+
 require 'thirdparty/googleMaps/samp.php';
 
 
-echo '<tr><td colspan="2">';
 
-echo '</td></tr>';
+
 
 
 echo '</table>';

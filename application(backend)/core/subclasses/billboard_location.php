@@ -21,15 +21,37 @@ class billboard_location extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('INSERT');
-            $this->set_fields('billboard_location_id, address, postal_code, latitude, longitude');
-            $this->set_values("?,?,?,?,?");
+            $this->set_fields('billboard_location_id, address, latitude, longitude, site_photo_day1, site_photo_day2, site_photo_night, size, material, no_of_faces, no_of_lights, visibility_range, readability_range, traffic_count, viewership, site_supplier, sign_permit_no, sign_permit_date_issue, sign_permit_date_expired, brgy_clear, brgy_clear_date_issuse, brgy_clear_date_expire, mmda_clear_no, mmda_clear_date_issue, mmda_clear_date_expire, cost_per_month, accredit_organization');
+            $this->set_values("?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?");
 
-            $bind_params = array('isidd',
+            $bind_params = array('isddsssssssssssssssssssssis',
                                  &$this->fields['billboard_location_id']['value'],
                                  &$this->fields['address']['value'],
-                                 &$this->fields['postal_code']['value'],
                                  &$this->fields['latitude']['value'],
-                                 &$this->fields['longitude']['value']);
+                                 &$this->fields['longitude']['value'],
+                                 &$this->fields['site_photo_day1']['value'],
+                                 &$this->fields['site_photo_day2']['value'],
+                                 &$this->fields['site_photo_night']['value'],
+                                 &$this->fields['size']['value'],
+                                 &$this->fields['material']['value'],
+                                 &$this->fields['no_of_faces']['value'],
+                                 &$this->fields['no_of_lights']['value'],
+                                 &$this->fields['visibility_range']['value'],
+                                 &$this->fields['readability_range']['value'],
+                                 &$this->fields['traffic_count']['value'],
+                                 &$this->fields['viewership']['value'],
+                                 &$this->fields['site_supplier']['value'],
+                                 &$this->fields['sign_permit_no']['value'],
+                                 &$this->fields['sign_permit_date_issue']['value'],
+                                 &$this->fields['sign_permit_date_expired']['value'],
+                                 &$this->fields['brgy_clear']['value'],
+                                 &$this->fields['brgy_clear_date_issuse']['value'],
+                                 &$this->fields['brgy_clear_date_expire']['value'],
+                                 &$this->fields['mmda_clear_no']['value'],
+                                 &$this->fields['mmda_clear_date_issue']['value'],
+                                 &$this->fields['mmda_clear_date_expire']['value'],
+                                 &$this->fields['cost_per_month']['value'],
+                                 &$this->fields['accredit_organization']['value']);
 
             $this->stmt_prepare($bind_params);
         }
@@ -45,14 +67,36 @@ class billboard_location extends data_abstraction
         if($this->stmt_template=='')
         {
             $this->set_query_type('UPDATE');
-            $this->set_update("address = ?, postal_code = ?, latitude = ?, longitude = ?");
+            $this->set_update("address = ?, latitude = ?, longitude = ?, site_photo_day1 = ?, site_photo_day2 = ?, site_photo_night = ?, size = ?, material = ?, no_of_faces = ?, no_of_lights = ?, visibility_range = ?, readability_range = ?, traffic_count = ?, viewership = ?, site_supplier = ?, sign_permit_no = ?, sign_permit_date_issue = ?, sign_permit_date_expired = ?, brgy_clear = ?, brgy_clear_date_issuse = ?, brgy_clear_date_expire = ?, mmda_clear_no = ?, mmda_clear_date_issue = ?, mmda_clear_date_expire = ?, cost_per_month = ?, accredit_organization = ?");
             $this->set_where("billboard_location_id = ?");
 
-            $bind_params = array('siddi',
+            $bind_params = array('sddsssssssssssssssssssssisi',
                                  &$this->fields['address']['value'],
-                                 &$this->fields['postal_code']['value'],
                                  &$this->fields['latitude']['value'],
                                  &$this->fields['longitude']['value'],
+                                 &$this->fields['site_photo_day1']['value'],
+                                 &$this->fields['site_photo_day2']['value'],
+                                 &$this->fields['site_photo_night']['value'],
+                                 &$this->fields['size']['value'],
+                                 &$this->fields['material']['value'],
+                                 &$this->fields['no_of_faces']['value'],
+                                 &$this->fields['no_of_lights']['value'],
+                                 &$this->fields['visibility_range']['value'],
+                                 &$this->fields['readability_range']['value'],
+                                 &$this->fields['traffic_count']['value'],
+                                 &$this->fields['viewership']['value'],
+                                 &$this->fields['site_supplier']['value'],
+                                 &$this->fields['sign_permit_no']['value'],
+                                 &$this->fields['sign_permit_date_issue']['value'],
+                                 &$this->fields['sign_permit_date_expired']['value'],
+                                 &$this->fields['brgy_clear']['value'],
+                                 &$this->fields['brgy_clear_date_issuse']['value'],
+                                 &$this->fields['brgy_clear_date_expire']['value'],
+                                 &$this->fields['mmda_clear_no']['value'],
+                                 &$this->fields['mmda_clear_date_issue']['value'],
+                                 &$this->fields['mmda_clear_date_expire']['value'],
+                                 &$this->fields['cost_per_month']['value'],
+                                 &$this->fields['accredit_organization']['value'],
                                  &$this->fields['billboard_location_id']['value']);
 
             $this->stmt_prepare($bind_params);
